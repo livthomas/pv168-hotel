@@ -6,6 +6,7 @@ package cz.muni.fi.pv168.hotel;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -16,7 +17,6 @@ public class GuestManagerImpl implements GuestManager {
     public Guest createGuest(Guest guest) {
         listOfGuests.add(guest);
         return guest;
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public Guest deleteGuest(Guest guest) {
@@ -25,7 +25,8 @@ public class GuestManagerImpl implements GuestManager {
     }
 
     public Collection<Guest> listAllGuests() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Collections.unmodifiableList(listOfGuests);
+        
     }
 
     public Guest findGuestById(int id) {
@@ -43,7 +44,8 @@ public class GuestManagerImpl implements GuestManager {
         Guest tempGuest;
         for(int i = 0; i < listOfGuests.size(); i++) {
             tempGuest = (Guest)listOfGuests.get(i);
-            if(tempGuest.getName()==name) {
+            if(tempGuest.getName().equals(name))
+            {
                 return tempGuest;
             }
         }
