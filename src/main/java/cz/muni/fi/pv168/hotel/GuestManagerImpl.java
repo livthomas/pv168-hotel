@@ -4,61 +4,33 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 
 public class GuestManagerImpl implements GuestManager {
-
-    List listOfGuests = new ArrayList<Guest>();
     
-    public Guest createGuest(Guest guest) {
-        listOfGuests.add(guest);
-        return guest;
+    public Guest createGuest(Guest guest) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Guest deleteGuest(Guest guest) {
-                listOfGuests.remove(guest);
-                return guest;
+    public Guest deleteGuest(Guest guest) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Collection<Guest> listAllGuests() {
-        return Collections.unmodifiableList(listOfGuests);
-        
+    public Collection<Guest> listAllGuests() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Guest findGuestById(int id) {
-        Guest tempGuest;
-        for(int i = 0; i < listOfGuests.size(); i++) {
-            tempGuest = (Guest)listOfGuests.get(i);
-            if(tempGuest.getId()==id) {
-                return tempGuest;
-            }
-        }
-        return null;
+    public Guest findGuestById(int id) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Guest findGuestByName(String name) {
-        Guest tempGuest;
-        for(int i = 0; i < listOfGuests.size(); i++) {
-            tempGuest = (Guest)listOfGuests.get(i);
-            if(tempGuest.getName().equals(name))
-            {
-                return tempGuest;
-            }
-        }
-        return null;
+    public Guest findGuestByName(String name) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Guest updateGuest(Guest guest) {
-        Guest tempGuest = findGuestById(guest.getId());
-        if(tempGuest == null) {
-            return null;
-        }
-        deleteGuest(tempGuest);
-        createGuest(guest);
-        return guest;
-    }   
+    public Guest updateGuest(Guest guest) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }
