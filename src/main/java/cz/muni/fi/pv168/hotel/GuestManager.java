@@ -14,14 +14,14 @@ public interface GuestManager {
 	
 	Guest createGuest(Guest guest);
 	
+	Guest updateGuest(Guest guest);
+	
 	Guest deleteGuest(Guest guest);
 	
 	Collection<Guest> listAllGuests();
 	
 	Guest findGuestById(int id);
 	
-	Guest findGuestByName(String name);
-	
-	Guest updateGuest(Guest guest);
+	Collection<Guest> findGuestsByName(String name);
 	
 }

@@ -5,127 +5,87 @@
 package cz.muni.fi.pv168.hotel;
 
 import java.util.Collection;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+import junit.framework.TestCase;
 
 /**
  *
- * @author wintermute
+ * @author livthomas
  */
-public class GuestManagerImplTest {
+public class GuestManagerImplTest extends TestCase {
     
-    GuestManager guestManager;
-    Guest guest,guest2;
-    
-    public GuestManagerImplTest() {
+    public GuestManagerImplTest(String testName) {
+        super(testName);
     }
     
-    @BeforeClass
-    public static void setUpClass() {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
     }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-        guestManager = new GuestManagerImpl();
-        guest = new Guest(0, "root", "01234567", false);
-        guest2 = new Guest(1, "bfu", "76543210", true);
-    }
-    
-    @After
-    public void tearDown() {
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
     }
 
     /**
      * Test of createGuest method, of class GuestManagerImpl.
      */
-    @Test
     public void testCreateGuest() {
         System.out.println("createGuest");
-        Guest result = guestManager.createGuest(guest);
-        Guest expResult = guest;
-        assertEquals(expResult,result);
-        fail("Bad guest added");
-    }
-
-    /**
-     * Test of deleteGuest method, of class GuestManagerImpl.
-     */
-    // TODO
-    @Test
-    public void testDeleteGuest() {
-        System.out.println("deleteGuest");
-        guest = null;
-        GuestManagerImpl instance = new GuestManagerImpl();
-        Guest expResult = null;
-        Guest result = instance.deleteGuest(guest);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of listAllGuests method, of class GuestManagerImpl.
-     */
-    // TODO
-    @Test
-    public void testListAllGuests() {
-        System.out.println("listAllGuests");
-        GuestManagerImpl instance = new GuestManagerImpl();
-        Collection expResult = null;
-        Collection result = instance.listAllGuests();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findGuestById method, of class GuestManagerImpl.
-     */
-    @Test
-    public void testFindGuestById() {
-        System.out.println("findGuestById");
-        guestManager.createGuest(guest);
-        guestManager.createGuest(guest2);
-        Guest result = guestManager.findGuestById(guest.getId());
-        Guest expResult = guest;
-        assertEquals(expResult,result);
-        fail("Did not found correct guest");
-    }
-
-    /**
-     * Test of findGuestByName method, of class GuestManagerImpl.
-     */
-    @Test
-    public void testFindGuestByName() {
-        System.out.println("findGuestByName");
-        Guest guest = new Guest(0, "root", "01234567", false);
-        Guest guest2 = new Guest(1, "bfu", "76543210", true);
-        guestManager.createGuest(guest);
-        guestManager.createGuest(guest2);
-        int result = guestManager.findGuestByName(guest.getName()).getId();
-        int expResult = guest.getId();
-        assertEquals(expResult,result);
-        fail("Did not found correct guest");
+        GuestManager manager = new GuestManagerImpl();
+        Guest guest = newGuest("Johny Bravo", "1111222233334444", true);
+        
+        // ID assignation
+        int guestId = guest.getId();
+        assertNotNull(guestId);
+        
+        // guest insertion
+        Guest result = manager.createGuest(guest);
+        assertEquals(guest, result);
     }
 
     /**
      * Test of updateGuest method, of class GuestManagerImpl.
      */
-    @Test
     public void testUpdateGuest() {
         System.out.println("updateGuest");
-        Guest newGuest = new Guest(1, "admin", "66600666", true);
-        Guest result = guestManager.updateGuest(newGuest);
-        Guest expResult = newGuest;
-        assertEquals(expResult,result);
-        fail("Did not update correct guest");
+        GuestManager manager = new GuestManagerImpl();
+        
+        Guest guest = manager.createGuest(newGuest("Johny Bravo", "1111222233334444", true));
+        guest.setName("Sherlock Holmes");
+        
+        manager.updateGuest(guest);
+        
+        Guest result = manager.findGuestById(guest.getId());
+        assertEquals(guest, result);
     }
+
+    /**
+     * Test of deleteGuest method, of class GuestManagerImpl.
+     */
+    public void testDeleteGuest() {
+        System.out.println("deleteGuest");
+        GuestManager manager = new GuestManagerImpl();
+        Guest guest1 = newGuest("Johny Bravo", "1111222233334444", true);
+        Guest guest2 = newGuest("Pamela Anderson", "9999999999999999", false);
+        
+        manager.createGuest(guest1);
+        manager.createGuest(guest2);
+        
+        manager.deleteGuest(guest1);
+        
+        assertNull(manager.findGuestById(guest1.getId()));
+        assertNotNull(manager.findGuestById(guest2.getId()));
+    }
+    
+    private Guest newGuest(String name, String creditCard, boolean vip) {
+        Guest guest = new Guest();
+        guest.setName(name);
+        guest.setCreditCard(creditCard);
+        guest.setVip(vip);
+        return guest;
+    }
+    
 }

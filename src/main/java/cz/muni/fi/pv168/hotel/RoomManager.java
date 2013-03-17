@@ -14,12 +14,12 @@ public interface RoomManager {
 	
 	Room createRoom(Room room);
 	
+	Room updateRoom(Room room);
+	
 	Room deleteRoom(Room room);
 	
 	Collection<Room> listAllRooms();
 	
 	Room findRoomById(int id);
-	
-	Room updateRoom(Room room);
 	
 }

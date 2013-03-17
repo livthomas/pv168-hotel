@@ -13,6 +13,10 @@ public class GuestManagerImpl implements GuestManager {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public Guest updateGuest(Guest guest) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public Guest deleteGuest(Guest guest) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -25,11 +29,7 @@ public class GuestManagerImpl implements GuestManager {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Guest findGuestByName(String name) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Guest updateGuest(Guest guest) throws UnsupportedOperationException {
+    public Collection<Guest> findGuestsByName(String name) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

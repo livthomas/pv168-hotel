@@ -13,6 +13,10 @@ public class RoomManagerImpl implements RoomManager {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public Room updateRoom(Room room) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     public Room deleteRoom(Room room) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -22,10 +26,6 @@ public class RoomManagerImpl implements RoomManager {
     }
 
     public Room findRoomById(int id) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Room updateRoom(Room room) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
