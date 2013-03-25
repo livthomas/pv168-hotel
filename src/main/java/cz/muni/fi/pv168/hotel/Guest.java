@@ -12,15 +12,15 @@ public class Guest {
 	
 	private int id;
 	private String name;
-	private String creditCard;
+	private String credit_card;
 	private boolean vip;
 
 	public Guest() {}
 	
-	public Guest(int id, String name, String creditCard, boolean vip) {
+	public Guest(int id, String name, String credit_card, boolean vip) {
 		this.id = id;
 		this.name = name;
-		this.creditCard = creditCard;
+		this.credit_card = credit_card;
 		this.vip = vip;
 	}
 
@@ -41,11 +41,11 @@ public class Guest {
 	}
 
 	public String getCreditCard() {
-		return creditCard;
+		return credit_card;
 	}
 
-	public void setCreditCard(String creditCard) {
-		this.creditCard = creditCard;
+	public void setCreditCard(String credit_card) {
+		this.credit_card = credit_card;
 	}
 
 	public boolean isVip() {

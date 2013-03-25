@@ -32,7 +32,7 @@ public class GuestManagerImpl implements GuestManager {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO GUEST (id,name,creditCard,vip) VALUES (?,?,?,?)",
+                    "INSERT INTO GUEST (id,name,credit_card,vip) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, guest.getId());
             st.setString(2, guest.getName());
@@ -82,7 +82,7 @@ public class GuestManagerImpl implements GuestManager {
         Guest guest = new Guest();
         guest.setId(rs.getInt("id"));
         guest.setName(rs.getString("name"));
-        guest.setCreditCard(rs.getString("creditCard"));
+        guest.setCreditCard(rs.getString("credit_card"));
         guest.setVip(rs.getBoolean("vip"));
         return guest;
     }
@@ -92,7 +92,7 @@ public class GuestManagerImpl implements GuestManager {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "INSERT INTO GUEST (id,name,creditCard,vip) VALUES (?,?,?,?)",
+                    "INSERT INTO GUEST (id,name,credit_card,vip) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             st.setInt(1, guest.getId());
             st.setString(2, guest.getName());
@@ -144,7 +144,7 @@ public class GuestManagerImpl implements GuestManager {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT id,name,creditCard,vip FROM guest");
+                    "SELECT id,name,credit_card,vip FROM guest");
             ResultSet rs = st.executeQuery();
             
             List<Guest> result = new ArrayList<Guest>();
@@ -171,7 +171,7 @@ public class GuestManagerImpl implements GuestManager {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT id,name,creditCard,vip FROM guest WHERE id = ?");
+                    "SELECT id,name,credit_card,vip FROM guest WHERE id = ?");
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
             
@@ -210,7 +210,7 @@ public class GuestManagerImpl implements GuestManager {
         
         try {
             st = conn.prepareStatement(
-                    "SELECT id,name,creditCard,vip FROM guest WHERE name = ?");
+                    "SELECT id,name,credit_card,vip FROM guest WHERE name = ?");
             st.setString(1, name);
             ResultSet rs = st.executeQuery();
             
