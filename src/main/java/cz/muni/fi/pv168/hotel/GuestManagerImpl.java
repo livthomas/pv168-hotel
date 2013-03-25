@@ -171,7 +171,7 @@ public class GuestManagerImpl implements GuestManager {
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement(
-                    "SELECT id,col,row,capacity,note FROM guest WHERE id = ?");
+                    "SELECT id,name,creditCard,vip FROM guest WHERE id = ?");
             st.setLong(1, id);
             ResultSet rs = st.executeQuery();
             
@@ -210,7 +210,7 @@ public class GuestManagerImpl implements GuestManager {
         
         try {
             st = conn.prepareStatement(
-                    "SELECT id,col,row,capacity,note FROM guest WHERE name = ?");
+                    "SELECT id,name,creditCard,vip FROM guest WHERE name = ?");
             st.setString(1, name);
             ResultSet rs = st.executeQuery();
             
