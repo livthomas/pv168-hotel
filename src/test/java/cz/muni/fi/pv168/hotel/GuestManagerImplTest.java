@@ -101,22 +101,6 @@ public class GuestManagerImplTest {
     }
 
     /**
-     * Test of findGuestByName method, of class GuestManagerImpl.
-     */
-    @Test
-    public void testFindGuestByName() {
-        System.out.println("findGuestByName");
-        Guest guest = new Guest(0, "root", "01234567", false);
-        Guest guest2 = new Guest(1, "bfu", "76543210", true);
-        guestManager.createGuest(guest);
-        guestManager.createGuest(guest2);
-        int result = guestManager.findGuestByName(guest.getName()).getId();
-        int expResult = guest.getId();
-        assertEquals(expResult,result);
-        fail("Did not found correct guest");
-    }
-
-    /**
      * Test of updateGuest method, of class GuestManagerImpl.
      */
     @Test
