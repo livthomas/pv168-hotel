@@ -4,7 +4,6 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import junit.framework.TestCase;
