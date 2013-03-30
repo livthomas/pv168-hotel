@@ -4,16 +4,9 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import static org.hamcrest.CoreMatchers.not;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.matchers.JUnitMatchers.hasItem;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import junit.framework.TestCase;
 
 /**
  *
