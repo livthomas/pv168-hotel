@@ -11,6 +11,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.matchers.JUnitMatchers.hasItem;
 
 /**
  *
@@ -48,68 +50,25 @@ public class GuestManagerImplTest {
      */
     @Test
     public void testCreateGuest() {
-        System.out.println("createGuest");
         Guest result = guestManager.createGuest(guest);
         Guest expResult = guest;
         assertEquals(expResult,result);
         fail("Bad guest added");
     }
+    
+    public void testCreateGuestWithNull() throws Exception {
+        try {
+            guestManager.createGuest(null);
+            fail("Did not threw NullPointerException");
+        } catch (NullPointerException ex) {
+            
+        }
+    }
 
-    /**
-     * Test of deleteGuest method, of class GuestManagerImpl.
-     */
-    // TODO
     @Test
     public void testDeleteGuest() {
-        System.out.println("deleteGuest");
-        guest = null;
-        GuestManagerImpl instance = new GuestManagerImpl();
-        Guest expResult = null;
-        Guest result = instance.deleteGuest(guest);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        guestManager.deleteGuest(guest);
+        assertThat(guestManager.listAllGuests(),not(hasItem(guest)));
     }
-
-    /**
-     * Test of listAllGuests method, of class GuestManagerImpl.
-     */
-    // TODO
-    @Test
-    public void testListAllGuests() {
-        System.out.println("listAllGuests");
-        GuestManagerImpl instance = new GuestManagerImpl();
-        Collection expResult = null;
-        Collection result = instance.listAllGuests();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findGuestById method, of class GuestManagerImpl.
-     */
-    @Test
-    public void testFindGuestById() {
-        System.out.println("findGuestById");
-        guestManager.createGuest(guest);
-        guestManager.createGuest(guest2);
-        Guest result = guestManager.findGuestById(guest.getId());
-        Guest expResult = guest;
-        assertEquals(expResult,result);
-        fail("Did not found correct guest");
-    }
-
-    /**
-     * Test of updateGuest method, of class GuestManagerImpl.
-     */
-    @Test
-    public void testUpdateGuest() {
-        System.out.println("updateGuest");
-        Guest newGuest = new Guest(1, "admin", "66600666", true);
-        Guest result = guestManager.updateGuest(newGuest);
-        Guest expResult = newGuest;
-        assertEquals(expResult,result);
-        fail("Did not update correct guest");
-    }
+ 
 }
