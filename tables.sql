@@ -1,6 +1,0 @@
-CREATE TABLE guest (
-    id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(100),
-    credit_card VARCHAR(50),
-    vip TINYINT(1)
- );
