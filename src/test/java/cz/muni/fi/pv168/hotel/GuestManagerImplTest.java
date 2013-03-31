@@ -4,7 +4,6 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
