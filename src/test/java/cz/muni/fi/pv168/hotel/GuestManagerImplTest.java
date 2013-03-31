@@ -12,12 +12,16 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.matchers.JUnitMatchers.hasItem;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  *
  * @author wintermute
  */
 public class GuestManagerImplTest {
+    
+    static ApplicationContext ctx;
     
     GuestManager guestManager;
     Guest guest,guest2;
@@ -27,6 +31,7 @@ public class GuestManagerImplTest {
     
     @BeforeClass
     public static void setUpClass() {
+        ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);
     }
     
     @AfterClass
@@ -35,7 +40,8 @@ public class GuestManagerImplTest {
     
     @Before
     public void setUp() {
-        guestManager = new GuestManagerImpl();
+        guestManager = ctx.getBean("guestManager", GuestManager.class);
+        
         guest = new Guest(0, "root", "01234567", false);
         guest2 = new Guest(1, "bfu", "76543210", true);
     }
@@ -52,7 +58,6 @@ public class GuestManagerImplTest {
         Guest result = guestManager.createGuest(guest);
         Guest expResult = guest;
         assertEquals(expResult,result);
-        fail("Bad guest added");
     }
     
     public void testCreateGuestWithNull() throws Exception {

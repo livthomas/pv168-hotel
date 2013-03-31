@@ -44,10 +44,11 @@ public class App {
             return new GuestManagerImpl(dataSource());
         }
  
-//        @Bean
-//        public RoomManager roomManager() {
-//            return new RoomManagerImpl(dataSource());
-//        }
+        @Bean
+        public RoomManager roomManager() {
+            return new RoomManagerImpl(dataSource());
+        }
+        
     }
     
 }

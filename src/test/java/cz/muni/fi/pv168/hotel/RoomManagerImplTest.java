@@ -12,12 +12,17 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.matchers.JUnitMatchers.hasItem;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  *
  * @author livthomas
  */
 public class RoomManagerImplTest {
+    
+    static ApplicationContext ctx;
+    
     RoomManager roomManager;
     Room room,room2;
     
@@ -26,6 +31,7 @@ public class RoomManagerImplTest {
     
     @BeforeClass
     public static void setUpClass() {
+        ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);
     }
     
     @AfterClass
@@ -34,7 +40,8 @@ public class RoomManagerImplTest {
     
     @Before
     public void setUp() {
-        roomManager = new RoomManagerImpl();
+        roomManager = ctx.getBean("roomManager", RoomManager.class);
+        
         room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
         room2 = new Room(1, RoomType.APPARTMENTS, (short) 1, false, "rozbita");
     }
@@ -51,7 +58,6 @@ public class RoomManagerImplTest {
         Room result = roomManager.createRoom(room);
         Room expResult = room;
         assertEquals(expResult,result);
-        fail("Bad room added");
     }
     
     public void testCreateRoomWithNull() throws Exception {

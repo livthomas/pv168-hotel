@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS room;
 CREATE TABLE room (
 	id INTEGER NOT NULL AUTO_INCREMENT,
-	room_type INTEGER,
+	type INTEGER,
 	beds SMALLINT,
-	sea_view TINYINT(1),
+	seaview BOOLEAN,
 	note VARCHAR(200),
 	PRIMARY KEY (id)
 );
@@ -13,7 +13,7 @@ CREATE TABLE guest (
 	id INTEGER NOT NULL AUTO_INCREMENT,
 	name VARCHAR(100),
 	credit_card VARCHAR(50),
-	vip TINYINT(1),
+	vip BOOLEAN,
 	room_id INTEGER,
 	PRIMARY KEY (id),
 	FOREIGN KEY (room_id) REFERENCES room (id)
