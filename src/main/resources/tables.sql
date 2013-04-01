@@ -6,7 +6,7 @@ CREATE TABLE room (
 	seaview BOOLEAN,
 	note VARCHAR(200),
 	PRIMARY KEY (id)
-);
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 
 DROP TABLE IF EXISTS guest;
 CREATE TABLE guest (

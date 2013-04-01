@@ -48,6 +48,11 @@ public class App {
         public RoomManager roomManager() {
             return new RoomManagerImpl(dataSource());
         }
+ 
+        @Bean
+        public HotelManager hotelManager() {
+            return new HotelManagerImpl(dataSource());
+        }
         
     }
     

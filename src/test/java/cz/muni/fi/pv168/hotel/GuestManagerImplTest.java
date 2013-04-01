@@ -23,8 +23,8 @@ public class GuestManagerImplTest {
     
     static ApplicationContext ctx;
     
-    GuestManager guestManager;
-    Guest guest,guest2;
+    private GuestManager guestManager;
+    private Guest guest,guest2;
     
     public GuestManagerImplTest() {
     }

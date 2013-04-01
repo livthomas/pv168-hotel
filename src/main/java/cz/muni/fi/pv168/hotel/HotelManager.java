@@ -14,7 +14,7 @@ public interface HotelManager {
 	
 	boolean checkIn(Guest guest, Room room);
 	
-	Guest checkOut(Guest guest);
+	boolean checkOut(Guest guest);
 	
 	Collection<Guest> findGuestsByRoom(Room room);
 	

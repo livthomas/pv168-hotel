@@ -15,13 +15,11 @@ public class GuestManagerImpl implements GuestManager {
  
     private JdbcTemplate jdbc;
     
-    public GuestManagerImpl() {}
-    
     public GuestManagerImpl(DataSource dataSource) {
         this.jdbc = new JdbcTemplate(dataSource);
     }
     
-    private static final ParameterizedRowMapper<Guest> GUEST_MAPPER = new ParameterizedRowMapper<Guest>() {
+    public static final ParameterizedRowMapper<Guest> GUEST_MAPPER = new ParameterizedRowMapper<Guest>() {
         @Override
         public Guest mapRow(ResultSet rs, int i) throws SQLException {
             return new Guest(rs.getInt("id"), rs.getString("name"), rs.getString("credit_card"), rs.getBoolean("vip"));
@@ -36,8 +34,7 @@ public class GuestManagerImpl implements GuestManager {
 
     @Override
     public Guest updateGuest(Guest guest) {
-        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?",
-        guest.getName(), guest.getCreditCard(), guest.isVip());
+        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.isVip());
         return guest;
     }
     
@@ -59,7 +56,7 @@ public class GuestManagerImpl implements GuestManager {
 
     @Override
     public Collection<Guest> findGuestsByName(String name) {
-        return jdbc.query("SELECT * FROM guest WHERE name like ?", GUEST_MAPPER, name);
+        return jdbc.query("SELECT * FROM guest WHERE name LIKE ?", GUEST_MAPPER, name);
     }
     
 }

@@ -23,8 +23,8 @@ public class RoomManagerImplTest {
     
     static ApplicationContext ctx;
     
-    RoomManager roomManager;
-    Room room,room2;
+    private RoomManager roomManager;
+    private Room room, room2;
     
     public RoomManagerImplTest() {
     }
