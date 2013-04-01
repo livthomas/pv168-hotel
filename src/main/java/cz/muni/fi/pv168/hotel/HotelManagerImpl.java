@@ -6,6 +6,7 @@ package cz.muni.fi.pv168.hotel;
 
 import java.util.Collection;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -39,7 +40,11 @@ public class HotelManagerImpl implements HotelManager {
 	
     @Override
 	public Room findRoomByGuest(Guest guest) {
-        return (Room) jdbc.query("SELECT * FROM room WHERE id = (SELECT room_id FROM guest WHERE id=?)", RoomManagerImpl.ROOM_MAPPER, guest.getId());
+        try {
+            return jdbc.queryForObject("SELECT * FROM room WHERE id = (SELECT room_id FROM guest WHERE id=?)", RoomManagerImpl.ROOM_MAPPER, guest.getId());
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
     
 }

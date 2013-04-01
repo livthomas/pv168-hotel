@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
@@ -52,7 +53,11 @@ public class RoomManagerImpl implements RoomManager {
 
     @Override
     public Room findRoomById(int id) {
-        return jdbc.queryForObject("SELECT * FROM room WHERE id=?",ROOM_MAPPER, id);
+        try {
+            return jdbc.queryForObject("SELECT * FROM room WHERE id=?", ROOM_MAPPER, id);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
     
 }

@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pv168.hotel;
 
+import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +25,6 @@ public class RoomManagerImplTest {
     static ApplicationContext ctx;
     
     private RoomManager roomManager;
-    private Room room, room2;
     
     public RoomManagerImplTest() {
     }
@@ -41,9 +41,6 @@ public class RoomManagerImplTest {
     @Before
     public void setUp() {
         roomManager = ctx.getBean("roomManager", RoomManager.class);
-        
-        room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
-        room2 = new Room(1, RoomType.APPARTMENTS, (short) 1, false, "rozbita");
     }
     
     @After
@@ -55,23 +52,55 @@ public class RoomManagerImplTest {
      */
     @Test
     public void testCreateRoom() {
+        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
         Room result = roomManager.createRoom(room);
         Room expResult = room;
         assertEquals(expResult,result);
+        roomManager.deleteRoom(room);
     }
     
     public void testCreateRoomWithNull() throws Exception {
         try {
             roomManager.createRoom(null);
             fail("Did not threw NullPointerException");
-        } catch (NullPointerException ex) {
-            
-        }
+        } catch (NullPointerException ex) {}
+    }
+    
+    @Test
+    public void testUpdateRoom() {
+        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        roomManager.createRoom(room);
+        room.setNote("upratana");
+        Room result = roomManager.updateRoom(room);
+        assertEquals(room, result);
+        roomManager.deleteRoom(room);
     }
 
     @Test
     public void testDeleteRoom() {
+        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        roomManager.createRoom(room);
         roomManager.deleteRoom(room);
-        assertThat(roomManager.listAllRooms(),not(hasItem(room)));
+        Room result = roomManager.findRoomById(room.getId());
+        assertNull(result);
     }
+    
+    @Test
+    public void testListAllRooms() {
+        Collection<Room> roomsBefore = roomManager.listAllRooms();
+        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        roomManager.createRoom(room);
+        Collection<Room> roomsAfter = roomManager.listAllRooms();
+        assertEquals(roomsAfter.size(), roomsBefore.size() + 1);
+        roomManager.deleteRoom(room);
+    }
+    
+    @Test
+    public void testFindRoomById() {
+        Room room = roomManager.createRoom(new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana"));
+        Room result = roomManager.findRoomById(room.getId());
+        assertEquals(room, result);
+        roomManager.deleteRoom(room);
+    }
+    
 }

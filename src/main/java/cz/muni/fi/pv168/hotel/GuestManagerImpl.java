@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Collection;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 public class GuestManagerImpl implements GuestManager {
@@ -34,7 +35,7 @@ public class GuestManagerImpl implements GuestManager {
 
     @Override
     public Guest updateGuest(Guest guest) {
-        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.isVip());
+        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.isVip(), guest.getId());
         return guest;
     }
     
@@ -51,7 +52,11 @@ public class GuestManagerImpl implements GuestManager {
 
     @Override
     public Guest findGuestById(int id) {
-        return jdbc.queryForObject("SELECT * FROM guest WHERE id=?",GUEST_MAPPER,id);
+        try {
+            return jdbc.queryForObject("SELECT * FROM guest WHERE id=?", GUEST_MAPPER, id);
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
