@@ -4,6 +4,8 @@
  */
 package cz.muni.fi.pv168.hotel;
 
+import java.util.Objects;
+
 /**
  *
  * @author livthomas
@@ -55,5 +57,39 @@ public class Guest {
 	public void setVip(boolean vip) {
 		this.vip = vip;
 	}
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + this.id;
+        hash = 97 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Guest other = (Guest) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.credit_card, other.credit_card)) {
+            return false;
+        }
+        if (this.vip != other.vip) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 	
 }

@@ -4,6 +4,8 @@
  */
 package cz.muni.fi.pv168.hotel;
 
+import java.util.Objects;
+
 /**
  *
  * @author livthomas
@@ -65,5 +67,40 @@ public class Room {
 	public void setNote(String note) {
 		this.note = note;
 	}
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.note);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        if (this.beds != other.beds) {
+            return false;
+        }
+        if (this.seaView != other.seaView) {
+            return false;
+        }
+        if (!Objects.equals(this.note, other.note)) {
+            return false;
+        }
+        return true;
+    }
 	
 }
