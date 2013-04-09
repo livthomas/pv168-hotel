@@ -4,7 +4,9 @@
  */
 package cz.muni.fi.pv168.hotel;
 
+import static cz.muni.fi.pv168.hotel.GuestManagerImplTest.ctx;
 import java.util.Collection;
+import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,6 +15,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 /**
  *
@@ -36,10 +41,15 @@ public class HotelManagerImplTest {
     
     @AfterClass
     public static void tearDownClass() {
+        JdbcTemplate jdbc = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+        JdbcTestUtils.executeSqlScript(jdbc, new ClassPathResource("deleteTables.sql"), true);
     }
     
     @Before
     public void setUp() {
+        JdbcTemplate jdbc = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+        JdbcTestUtils.executeSqlScript(jdbc, new ClassPathResource("createTables.sql"), true);
+        
         guestManager = ctx.getBean("guestManager", GuestManager.class);
         roomManager = ctx.getBean("roomManager", RoomManager.class);
         hotelManager = ctx.getBean("hotelManager", HotelManager.class);
@@ -60,9 +70,6 @@ public class HotelManagerImplTest {
         hotelManager.checkIn(guest, room);
         Collection<Guest> result = hotelManager.findGuestsByRoom(room);
         assertTrue(!result.isEmpty());
-        
-        guestManager.deleteGuest(guest);
-        roomManager.deleteRoom(room);
     }
 
     /**
@@ -77,9 +84,6 @@ public class HotelManagerImplTest {
         hotelManager.checkOut(guest);
         Room result = hotelManager.findRoomByGuest(guest);
         assertNull(result);
-        
-        guestManager.deleteGuest(guest);
-        roomManager.deleteRoom(room);
     }
 
     /**
@@ -93,9 +97,6 @@ public class HotelManagerImplTest {
         
         Collection<Guest> result = hotelManager.findGuestsByRoom(room);
         assertTrue(result.contains(guest));
-        
-        guestManager.deleteGuest(guest);
-        roomManager.deleteRoom(room);
     }
 
     /**
@@ -109,9 +110,6 @@ public class HotelManagerImplTest {
         
         Room result = hotelManager.findRoomByGuest(guest);
         assertEquals(room, result);
-        
-        guestManager.deleteGuest(guest);
-        roomManager.deleteRoom(room);
     }
     
 }

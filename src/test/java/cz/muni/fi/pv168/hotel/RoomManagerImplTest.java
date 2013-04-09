@@ -4,7 +4,9 @@
  */
 package cz.muni.fi.pv168.hotel;
 
+import static cz.muni.fi.pv168.hotel.GuestManagerImplTest.ctx;
 import java.util.Collection;
+import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,6 +17,9 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.matchers.JUnitMatchers.hasItem;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 /**
  *
@@ -36,10 +41,15 @@ public class RoomManagerImplTest {
     
     @AfterClass
     public static void tearDownClass() {
+        JdbcTemplate jdbc = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+        JdbcTestUtils.executeSqlScript(jdbc, new ClassPathResource("deleteTables.sql"), true);
     }
     
     @Before
     public void setUp() {
+        JdbcTemplate jdbc = new JdbcTemplate(ctx.getBean("dataSource", DataSource.class));
+        JdbcTestUtils.executeSqlScript(jdbc, new ClassPathResource("createTables.sql"), true);
+        
         roomManager = ctx.getBean("roomManager", RoomManager.class);
     }
     
@@ -56,7 +66,6 @@ public class RoomManagerImplTest {
         Room result = roomManager.createRoom(room);
         Room expResult = room;
         assertEquals(expResult,result);
-        roomManager.deleteRoom(room);
     }
     
     public void testCreateRoomWithNull() throws Exception {
@@ -73,7 +82,6 @@ public class RoomManagerImplTest {
         room.setNote("upratana");
         Room result = roomManager.updateRoom(room);
         assertEquals(room, result);
-        roomManager.deleteRoom(room);
     }
 
     @Test
@@ -92,15 +100,13 @@ public class RoomManagerImplTest {
         roomManager.createRoom(room);
         Collection<Room> roomsAfter = roomManager.listAllRooms();
         assertEquals(roomsAfter.size(), roomsBefore.size() + 1);
-        roomManager.deleteRoom(room);
     }
     
     @Test
     public void testFindRoomById() {
-        Room room = roomManager.createRoom(new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana"));
+        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "neupratana"));
         Room result = roomManager.findRoomById(room.getId());
         assertEquals(room, result);
-        roomManager.deleteRoom(room);
     }
     
 }
