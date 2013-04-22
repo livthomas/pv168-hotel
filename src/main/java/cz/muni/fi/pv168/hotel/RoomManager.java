@@ -12,14 +12,14 @@ import java.util.Collection;
  */
 public interface RoomManager {
 	
-	Room createRoom(Room room);
+	void createRoom(Room room);
 	
-	Room updateRoom(Room room);
+	void updateRoom(Room room);
 	
-	Room deleteRoom(Room room);
+	void deleteRoom(Room room);
 	
 	Collection<Room> listAllRooms();
 	
-	Room findRoomById(int id);
+	Room findRoomById(Integer id);
 	
 }

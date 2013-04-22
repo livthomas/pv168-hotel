@@ -4,7 +4,6 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import static cz.muni.fi.pv168.hotel.GuestManagerImplTest.ctx;
 import java.util.Collection;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -13,8 +12,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.matchers.JUnitMatchers.hasItem;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.ClassPathResource;
@@ -36,7 +33,7 @@ public class RoomManagerImplTest {
     
     @BeforeClass
     public static void setUpClass() {
-        ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);
+        ctx = new AnnotationConfigApplicationContext(AppTest.SpringConfig.class);
     }
     
     @AfterClass
@@ -62,12 +59,12 @@ public class RoomManagerImplTest {
      */
     @Test
     public void testCreateRoom() {
-        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
-        Room result = roomManager.createRoom(room);
-        Room expResult = room;
-        assertEquals(expResult,result);
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        roomManager.createRoom(room);
+        assertNotNull(room.getId());
     }
     
+    @Test
     public void testCreateRoomWithNull() throws Exception {
         try {
             roomManager.createRoom(null);
@@ -77,16 +74,17 @@ public class RoomManagerImplTest {
     
     @Test
     public void testUpdateRoom() {
-        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         room.setNote("upratana");
-        Room result = roomManager.updateRoom(room);
+        roomManager.updateRoom(room);
+        Room result = roomManager.findRoomById(room.getId());
         assertEquals(room, result);
     }
 
     @Test
     public void testDeleteRoom() {
-        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         roomManager.deleteRoom(room);
         Room result = roomManager.findRoomById(room.getId());
@@ -96,7 +94,7 @@ public class RoomManagerImplTest {
     @Test
     public void testListAllRooms() {
         Collection<Room> roomsBefore = roomManager.listAllRooms();
-        Room room = new Room(0, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         Collection<Room> roomsAfter = roomManager.listAllRooms();
         assertEquals(roomsAfter.size(), roomsBefore.size() + 1);
@@ -104,7 +102,8 @@ public class RoomManagerImplTest {
     
     @Test
     public void testFindRoomById() {
-        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "neupratana"));
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        roomManager.createRoom(room);
         Room result = roomManager.findRoomById(room.getId());
         assertEquals(room, result);
     }

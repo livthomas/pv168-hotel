@@ -4,7 +4,6 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import static cz.muni.fi.pv168.hotel.GuestManagerImplTest.ctx;
 import java.util.Collection;
 import javax.sql.DataSource;
 import org.junit.After;
@@ -36,7 +35,7 @@ public class HotelManagerImplTest {
     
     @BeforeClass
     public static void setUpClass() {
-        ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);
+        ctx = new AnnotationConfigApplicationContext(AppTest.SpringConfig.class);
     }
     
     @AfterClass
@@ -65,7 +64,8 @@ public class HotelManagerImplTest {
     @Test
     public void testCheckIn() {
         Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
-        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "Bordel"));
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "Bordel");
+        roomManager.createRoom(room);
         
         hotelManager.checkIn(guest, room);
         Collection<Guest> result = hotelManager.findGuestsByRoom(room);
@@ -78,7 +78,8 @@ public class HotelManagerImplTest {
     @Test
     public void testCheckOut() {
         Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
-        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "Bordel"));
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "Bordel");
+        roomManager.createRoom(room);
         hotelManager.checkIn(guest, room);
         
         hotelManager.checkOut(guest);
@@ -92,7 +93,8 @@ public class HotelManagerImplTest {
     @Test
     public void testFindGuestsByRoom() {
         Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
-        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "Bordel"));        
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "Bordel");
+        roomManager.createRoom(room);        
         hotelManager.checkIn(guest, room);
         
         Collection<Guest> result = hotelManager.findGuestsByRoom(room);
@@ -105,7 +107,8 @@ public class HotelManagerImplTest {
     @Test
     public void testFindRoomByGuest() {
         Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
-        Room room = roomManager.createRoom(new Room(1, RoomType.APPARTMENTS, (short) 2, true, "Bordel"));        
+        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "Bordel");
+        roomManager.createRoom(room);        
         hotelManager.checkIn(guest, room);
         
         Room result = hotelManager.findRoomByGuest(guest);

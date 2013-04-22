@@ -12,15 +12,15 @@ import java.util.Objects;
  */
 public class Room {
 	
-	private int id;
+	private Integer id;
 	private RoomType type;
-	private short beds;
-	private boolean seaView;
+	private Short beds;
+	private Boolean seaView;
 	private String note;
 	
 	public Room() {}
 
-	public Room(int id, RoomType type, short beds, boolean seaView, String note) {
+	public Room(Integer id, RoomType type, Short beds, Boolean seaView, String note) {
 		this.id = id;
 		this.type = type;
 		this.beds = beds;
@@ -28,11 +28,11 @@ public class Room {
 		this.note = note;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -44,19 +44,19 @@ public class Room {
 		this.type = type;
 	}
 
-	public short getBeds() {
+	public Short getBeds() {
 		return beds;
 	}
 
-	public void setBeds(short beds) {
+	public void setBeds(Short beds) {
 		this.beds = beds;
 	}
 
-	public boolean isSeaView() {
+	public Boolean isSeaView() {
 		return seaView;
 	}
 
-	public void setSeaView(boolean seaView) {
+	public void setSeaView(Boolean seaView) {
 		this.seaView = seaView;
 	}
 
@@ -70,9 +70,9 @@ public class Room {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + this.id;
-        hash = 29 * hash + Objects.hashCode(this.note);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.note);
         return hash;
     }
 
@@ -85,16 +85,16 @@ public class Room {
             return false;
         }
         final Room other = (Room) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (this.type != other.type) {
             return false;
         }
-        if (this.beds != other.beds) {
+        if (!Objects.equals(this.beds, other.beds)) {
             return false;
         }
-        if (this.seaView != other.seaView) {
+        if (!Objects.equals(this.seaView, other.seaView)) {
             return false;
         }
         if (!Objects.equals(this.note, other.note)) {
@@ -102,5 +102,5 @@ public class Room {
         }
         return true;
     }
-	
+    
 }

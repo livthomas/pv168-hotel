@@ -29,21 +29,19 @@ public class RoomManagerImpl implements RoomManager {
     };
     
     @Override
-    public Room createRoom(Room room) {
+    public void createRoom(Room room) {
         jdbc.update("INSERT INTO room (id,type,beds,seaview,note) VALUES (?,?,?,?,?)", room.getId(), room.getType().ordinal(), room.getBeds(), room.isSeaView(), room.getNote());
-        return room;
+        room.setId(jdbc.queryForObject("select last_insert_id()", Integer.class));
     }
 
     @Override
-    public Room updateRoom(Room room) {
+    public void updateRoom(Room room) {
         jdbc.update("UPDATE room SET type=?, beds=?, seaview=?, note=? WHERE id=?", room.getType().ordinal(), room.getBeds(), room.isSeaView(), room.getNote(), room.getId());
-        return room;
     }
 
     @Override
-    public Room deleteRoom(Room room) {
+    public void deleteRoom(Room room) {
         jdbc.update("DELETE FROM room WHERE id=?", room.getId());
-        return room;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class RoomManagerImpl implements RoomManager {
     }
 
     @Override
-    public Room findRoomById(int id) {
+    public Room findRoomById(Integer id) {
         try {
             return jdbc.queryForObject("SELECT * FROM room WHERE id=?", ROOM_MAPPER, id);
         } catch (EmptyResultDataAccessException ex) {
