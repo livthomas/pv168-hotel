@@ -52,7 +52,7 @@ public class Room {
 		this.beds = beds;
 	}
 
-	public Boolean isSeaView() {
+	public Boolean getSeaView() {
 		return seaView;
 	}
 

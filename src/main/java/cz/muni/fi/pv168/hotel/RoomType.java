@@ -9,5 +9,5 @@ package cz.muni.fi.pv168.hotel;
  * @author livthomas
  */
 public enum RoomType {
-	APPARTMENTS
+	BASIC_ROOM, APPARTMENT, ROYAL_SUITE
 }

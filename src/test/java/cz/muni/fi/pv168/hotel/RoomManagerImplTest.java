@@ -59,7 +59,7 @@ public class RoomManagerImplTest {
      */
     @Test
     public void testCreateRoom() {
-        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         assertNotNull(room.getId());
     }
@@ -74,7 +74,7 @@ public class RoomManagerImplTest {
     
     @Test
     public void testUpdateRoom() {
-        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         room.setNote("upratana");
         roomManager.updateRoom(room);
@@ -84,7 +84,7 @@ public class RoomManagerImplTest {
 
     @Test
     public void testDeleteRoom() {
-        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         roomManager.deleteRoom(room);
         Room result = roomManager.findRoomById(room.getId());
@@ -94,7 +94,7 @@ public class RoomManagerImplTest {
     @Test
     public void testListAllRooms() {
         Collection<Room> roomsBefore = roomManager.listAllRooms();
-        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         Collection<Room> roomsAfter = roomManager.listAllRooms();
         assertEquals(roomsAfter.size(), roomsBefore.size() + 1);
@@ -102,7 +102,7 @@ public class RoomManagerImplTest {
     
     @Test
     public void testFindRoomById() {
-        Room room = new Room(null, RoomType.APPARTMENTS, (short) 2, true, "neupratana");
+        Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
         Room result = roomManager.findRoomById(room.getId());
         assertEquals(room, result);

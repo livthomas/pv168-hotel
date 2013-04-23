@@ -30,13 +30,13 @@ public class RoomManagerImpl implements RoomManager {
     
     @Override
     public void createRoom(Room room) {
-        jdbc.update("INSERT INTO room (id,type,beds,seaview,note) VALUES (?,?,?,?,?)", room.getId(), room.getType().ordinal(), room.getBeds(), room.isSeaView(), room.getNote());
+        jdbc.update("INSERT INTO room (id,type,beds,seaview,note) VALUES (?,?,?,?,?)", room.getId(), room.getType().ordinal(), room.getBeds(), room.getSeaView(), room.getNote());
         room.setId(jdbc.queryForObject("select last_insert_id()", Integer.class));
     }
 
     @Override
     public void updateRoom(Room room) {
-        jdbc.update("UPDATE room SET type=?, beds=?, seaview=?, note=? WHERE id=?", room.getType().ordinal(), room.getBeds(), room.isSeaView(), room.getNote(), room.getId());
+        jdbc.update("UPDATE room SET type=?, beds=?, seaview=?, note=? WHERE id=?", room.getType().ordinal(), room.getBeds(), room.getSeaView(), room.getNote(), room.getId());
     }
 
     @Override
