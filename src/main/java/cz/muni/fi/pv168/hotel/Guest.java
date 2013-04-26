@@ -12,25 +12,25 @@ import java.util.Objects;
  */
 public class Guest {
 	
-	private int id;
+	private Integer id;
 	private String name;
 	private String credit_card;
-	private boolean vip;
+	private Boolean vip;
 
 	public Guest() {}
 	
-	public Guest(int id, String name, String credit_card, boolean vip) {
+	public Guest(Integer id, String name, String credit_card, Boolean vip) {
 		this.id = id;
 		this.name = name;
 		this.credit_card = credit_card;
 		this.vip = vip;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -50,11 +50,11 @@ public class Guest {
 		this.credit_card = credit_card;
 	}
 
-	public boolean isVip() {
+	public Boolean isVip() {
 		return vip;
 	}
 
-	public void setVip(boolean vip) {
+	public void setVip(Boolean vip) {
 		this.vip = vip;
 	}
 

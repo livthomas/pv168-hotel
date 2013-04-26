@@ -55,9 +55,10 @@ public class GuestManagerImplTest {
 
     @Test
     public void testCreateGuest() {
-        Guest guest = new Guest(0, "root", "01234567", false);
-        Guest result = guestManager.createGuest(guest);
-        assertEquals(guest, result);
+        Guest guest = new Guest(null, "root", "01234567", false);
+        guestManager.createGuest(guest);
+        Guest result = guestManager.findGuestById(guest.getId());
+        assertEquals(guest.getId(), result.getId());
     }
 
     @Test
@@ -71,18 +72,19 @@ public class GuestManagerImplTest {
 
     @Test
     public void testUpdateGuest() {
-        Guest guest = new Guest(0, "root", "01234567", false);
+        Guest guest = new Guest(null, "root", "01234567", false);
         guestManager.createGuest(guest);
         guest.setName("toor");
-        Guest result = guestManager.updateGuest(guest);
-        assertEquals(guest, result);
+        guestManager.updateGuest(guest);
+        Guest result = guestManager.findGuestById(guest.getId());
+        assertEquals(guest.getName(), result.getName());
     }
 
     @Test
     public void testDeleteGuest() {
-        Guest guest = new Guest(0, "root", "01234567", false);
+        Guest guest = new Guest(null, "root", "01234567", false);
         guestManager.createGuest(guest);
-        guestManager.deleteGuest(guest);
+        guestManager.deleteGuest(guest.getId());
         Guest result = guestManager.findGuestById(guest.getId());
         assertNull(result);
     }
@@ -90,7 +92,7 @@ public class GuestManagerImplTest {
     @Test
     public void testListAllGuests() {
         Collection<Guest> guestsBefore = guestManager.listAllGuests();
-        Guest guest = new Guest(0, "root", "01234567", false);
+        Guest guest = new Guest(null, "root", "01234567", false);
         guestManager.createGuest(guest);
         Collection<Guest> guestsAfter = guestManager.listAllGuests();
         assertEquals(guestsAfter.size(), guestsBefore.size() + 1);
@@ -98,14 +100,16 @@ public class GuestManagerImplTest {
 
     @Test
     public void testFindGuestById() {
-        Guest guest = guestManager.createGuest(new Guest(1, "root", "01234567", false));
+        guestManager.createGuest(new Guest(null, "root", "01234567", false));
+        Guest guest = guestManager.findGuestById(1);
         Guest result = guestManager.findGuestById(guest.getId());
         assertEquals(guest, result);
     }
 
     @Test
     public void testFindGuestsByName() {
-        Guest guest = guestManager.createGuest(new Guest(1, "root", "01234567", false));
+        guestManager.createGuest(new Guest(null, "root", "01234567", false));
+        Guest guest = guestManager.findGuestById(1);
         Collection<Guest> result = guestManager.findGuestsByName("root");
         assertTrue(result.contains(guest));
     }

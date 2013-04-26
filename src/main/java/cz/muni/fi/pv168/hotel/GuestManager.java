@@ -12,11 +12,11 @@ import java.util.Collection;
  */
 public interface GuestManager {
 	
-	Guest createGuest(Guest guest);
+	void createGuest(Guest guest);
 	
-	Guest updateGuest(Guest guest);
+	void updateGuest(Guest guest);
 	
-	Guest deleteGuest(Guest guest);
+	void deleteGuest(Integer id);
 	
 	Collection<Guest> listAllGuests();
 	

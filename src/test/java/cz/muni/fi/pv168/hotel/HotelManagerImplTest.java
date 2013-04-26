@@ -63,7 +63,8 @@ public class HotelManagerImplTest {
      */
     @Test
     public void testCheckIn() {
-        Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
+        guestManager.createGuest(new Guest(null,"Peter","0000",true));
+        Guest guest = guestManager.findGuestById(1);
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "Bordel");
         roomManager.createRoom(room);
         
@@ -77,7 +78,8 @@ public class HotelManagerImplTest {
      */
     @Test
     public void testCheckOut() {
-        Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
+        guestManager.createGuest(new Guest(null,"Peter","0000",true));
+        Guest guest = guestManager.findGuestById(1);
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "Bordel");
         roomManager.createRoom(room);
         hotelManager.checkIn(guest, room);
@@ -92,7 +94,8 @@ public class HotelManagerImplTest {
      */
     @Test
     public void testFindGuestsByRoom() {
-        Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
+        guestManager.createGuest(new Guest(null,"Peter","0000",true));
+        Guest guest = guestManager.findGuestById(1);
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "Bordel");
         roomManager.createRoom(room);        
         hotelManager.checkIn(guest, room);
@@ -106,7 +109,8 @@ public class HotelManagerImplTest {
      */
     @Test
     public void testFindRoomByGuest() {
-        Guest guest = guestManager.createGuest(new Guest(1,"Peter","0000",true));
+        guestManager.createGuest(new Guest(null,"Peter","0000",true));
+        Guest guest = guestManager.findGuestById(1);
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "Bordel");
         roomManager.createRoom(room);        
         hotelManager.checkIn(guest, room);

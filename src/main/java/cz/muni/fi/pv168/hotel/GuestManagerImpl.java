@@ -28,21 +28,19 @@ public class GuestManagerImpl implements GuestManager {
     };
     
     @Override
-    public Guest createGuest(Guest guest) {
+    public void createGuest(Guest guest) {
         jdbc.update("INSERT INTO guest(id, name, credit_card, vip) VALUES (?,?,?,?)",guest.getId(), guest.getName(), guest.getCreditCard(), guest.isVip());
-        return guest;
+        guest.setId(jdbc.queryForObject("select last_insert_id()", Integer.class));
     }
 
     @Override
-    public Guest updateGuest(Guest guest) {
+    public void updateGuest(Guest guest) {
         jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.isVip(), guest.getId());
-        return guest;
     }
     
     @Override
-    public Guest deleteGuest(Guest guest) {
-        jdbc.update("DELETE FROM guest WHERE id=?", guest.getId());
-        return guest;
+    public void deleteGuest(Integer id) {
+        jdbc.update("DELETE FROM guest WHERE id=?", id);
     }
 
     @Override
