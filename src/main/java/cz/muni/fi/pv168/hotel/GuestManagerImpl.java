@@ -7,6 +7,7 @@ package cz.muni.fi.pv168.hotel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,13 +30,13 @@ public class GuestManagerImpl implements GuestManager {
     
     @Override
     public void createGuest(Guest guest) {
-        jdbc.update("INSERT INTO guest(id, name, credit_card, vip) VALUES (?,?,?,?)",guest.getId(), guest.getName(), guest.getCreditCard(), guest.isVip());
+        jdbc.update("INSERT INTO guest(id, name, credit_card, vip) VALUES (?,?,?,?)",guest.getId(), guest.getName(), guest.getCreditCard(), guest.getVip());
         guest.setId(jdbc.queryForObject("select last_insert_id()", Integer.class));
     }
 
     @Override
     public void updateGuest(Guest guest) {
-        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.isVip(), guest.getId());
+        jdbc.update("UPDATE guest SET name=?, credit_card=?, vip=? WHERE id=?", guest.getName(), guest.getCreditCard(), guest.getVip(), guest.getId());
     }
     
     @Override

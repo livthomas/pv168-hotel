@@ -5,6 +5,7 @@
 package cz.muni.fi.pv168.hotel;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  *

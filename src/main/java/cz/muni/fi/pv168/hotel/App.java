@@ -1,5 +1,7 @@
 package cz.muni.fi.pv168.hotel;
 
+import java.util.Collection;
+import java.util.List;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +18,7 @@ import javax.sql.DataSource;
 public class App {
     
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+        
     }
     
     @Configuration

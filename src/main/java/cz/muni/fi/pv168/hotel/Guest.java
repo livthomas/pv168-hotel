@@ -50,7 +50,7 @@ public class Guest {
 		this.credit_card = credit_card;
 	}
 
-	public Boolean isVip() {
+	public Boolean getVip() {
 		return vip;
 	}
 
