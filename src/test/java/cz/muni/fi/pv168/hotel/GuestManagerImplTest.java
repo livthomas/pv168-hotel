@@ -74,10 +74,11 @@ public class GuestManagerImplTest {
     public void testUpdateGuest() {
         Guest guest = new Guest(null, "root", "01234567", false);
         guestManager.createGuest(guest);
+        Integer id = guestManager.findGuestById(guest.getId()).getId();
         guest.setName("toor");
         guestManager.updateGuest(guest);
         Guest result = guestManager.findGuestById(guest.getId());
-        assertEquals(guest.getName(), result.getName());
+        assertEquals(id, result.getId());
     }
 
     @Test
