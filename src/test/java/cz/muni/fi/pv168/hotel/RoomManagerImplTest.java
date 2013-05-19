@@ -4,7 +4,7 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
+import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -93,10 +93,10 @@ public class RoomManagerImplTest {
     
     @Test
     public void testListAllRooms() {
-        Collection<Room> roomsBefore = roomManager.listAllRooms();
+        List<Room> roomsBefore = roomManager.listAllRooms();
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
-        Collection<Room> roomsAfter = roomManager.listAllRooms();
+        List<Room> roomsAfter = roomManager.listAllRooms();
         assertEquals(roomsAfter.size(), roomsBefore.size() + 1);
     }
     

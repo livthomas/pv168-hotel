@@ -6,7 +6,7 @@ package cz.muni.fi.pv168.hotel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -64,7 +64,7 @@ public class GuestManagerImpl implements GuestManager {
     }
 
     @Override
-    public Collection<Guest> listAllGuests() {
+    public List<Guest> listAllGuests() {
         try {
             return jdbc.query("SELECT * FROM guest", GUEST_MAPPER);
         } catch (EmptyResultDataAccessException ex) {
@@ -86,7 +86,7 @@ public class GuestManagerImpl implements GuestManager {
     }
 
     @Override
-    public Collection<Guest> findGuestsByName(String name) {
+    public List<Guest> findGuestsByName(String name) {
         try {
             return jdbc.query("SELECT * FROM guest WHERE name LIKE ?", GUEST_MAPPER, name);
         } catch (EmptyResultDataAccessException ex) {

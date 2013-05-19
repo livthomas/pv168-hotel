@@ -6,7 +6,7 @@ package cz.muni.fi.pv168.hotel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -63,7 +63,7 @@ public class RoomManagerImpl implements RoomManager {
     }
 
     @Override
-    public Collection<Room> listAllRooms() {
+    public List<Room> listAllRooms() {
         try {
             return jdbc.query("SELECT * FROM room", ROOM_MAPPER);
         } catch (EmptyResultDataAccessException ex) {

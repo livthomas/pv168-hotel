@@ -4,7 +4,7 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -18,7 +18,7 @@ public interface RoomManager {
 	
 	void deleteRoom(Room room);
 	
-	Collection<Room> listAllRooms();
+	List<Room> listAllRooms();
 	
 	Room findRoomById(Integer id);
 	

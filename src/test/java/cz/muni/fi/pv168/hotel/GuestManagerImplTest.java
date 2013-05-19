@@ -4,7 +4,7 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
+import java.util.List;
 import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -92,10 +92,10 @@ public class GuestManagerImplTest {
 
     @Test
     public void testListAllGuests() {
-        Collection<Guest> guestsBefore = guestManager.listAllGuests();
+        List<Guest> guestsBefore = guestManager.listAllGuests();
         Guest guest = new Guest(null, "root", "01234567", false);
         guestManager.createGuest(guest);
-        Collection<Guest> guestsAfter = guestManager.listAllGuests();
+        List<Guest> guestsAfter = guestManager.listAllGuests();
         assertEquals(guestsAfter.size(), guestsBefore.size() + 1);
     }
 
@@ -111,7 +111,7 @@ public class GuestManagerImplTest {
     public void testFindGuestsByName() {
         guestManager.createGuest(new Guest(null, "root", "01234567", false));
         Guest guest = guestManager.findGuestById(1);
-        Collection<Guest> result = guestManager.findGuestsByName("root");
+        List<Guest> result = guestManager.findGuestsByName("root");
         assertTrue(result.contains(guest));
     }
 }

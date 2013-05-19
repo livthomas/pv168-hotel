@@ -4,7 +4,6 @@
  */
 package cz.muni.fi.pv168.hotel;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,10 +18,10 @@ public interface GuestManager {
 	
 	void deleteGuest(Integer id);
 	
-	Collection<Guest> listAllGuests();
+	List<Guest> listAllGuests();
 	
 	Guest findGuestById(int id);
 	
-	Collection<Guest> findGuestsByName(String name);
+	List<Guest> findGuestsByName(String name);
 	
 }
