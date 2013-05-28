@@ -86,7 +86,7 @@ public class RoomManagerImplTest {
     public void testDeleteRoom() {
         Room room = new Room(null, RoomType.APPARTMENT, (short) 2, true, "neupratana");
         roomManager.createRoom(room);
-        roomManager.deleteRoom(room);
+        roomManager.deleteRoom(room.getId());
         Room result = roomManager.findRoomById(room.getId());
         assertNull(result);
     }

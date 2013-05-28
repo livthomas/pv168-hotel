@@ -4,11 +4,19 @@
  */
 package cz.muni.fi.pv168.hotel.gui;
 
+import cz.muni.fi.pv168.hotel.RoomType;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author livthomas
  */
 public class HotelFrame extends javax.swing.JFrame {
+    
+    private GuestTableModel guestModel;
+    private RoomTableModel roomModel;
 
     /**
      * Creates new form HotelFrame
@@ -16,8 +24,40 @@ public class HotelFrame extends javax.swing.JFrame {
     public HotelFrame() {
         initComponents();
         
-//        GuestTableModel guestModel = (GuestTableModel) jTableGuests.getModel();
-//        guestModel.addGuests(guestManager.listAllGuests());
+        guestModel = (GuestTableModel) jTableGuests.getModel();
+        roomModel = (RoomTableModel) jTableRooms.getModel();
+    }
+    
+    private void showGuestFrame() {
+        GuestFrame guestFrame = new GuestFrame(guestModel);
+        guestFrame.setVisible(true);
+    }
+    
+    private void showRoomFrame() {
+        RoomFrame roomFrame = new RoomFrame(roomModel);
+        roomFrame.setVisible(true);
+    }
+    
+    private void actionDeleteGuest() {
+        int row = jTableGuests.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot delete guest", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Do you really want to delete the selected guest?", "Delete guest", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            guestModel.removeRow(row);
+        }
+    }
+    
+    private void actionDeleteRoom() {
+        int row = jTableRooms.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "You have to select a room.", "Cannot delete room", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Do you really want to delete the selected room?", "Delete room", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            roomModel.removeRow(row);
+        }
     }
 
     /**
@@ -28,73 +68,69 @@ public class HotelFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jPopupMenu2 = new javax.swing.JPopupMenu();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jTabbedPane = new javax.swing.JTabbedPane();
+        jScrollPaneGuest = new javax.swing.JScrollPane();
         jTableGuests = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPaneRoom = new javax.swing.JScrollPane();
         jTableRooms = new javax.swing.JTable();
         jToolBar1 = new javax.swing.JToolBar();
         jButtonAddGuest = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton2 = new javax.swing.JButton();
+        jButtonDeleteGuest = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
+        jButtonAddRoom = new javax.swing.JButton();
+        jButtonDeleteRoom = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
+        addGuestMenuItem = new javax.swing.JMenuItem();
+        jMenuItemDeleteGuest = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        addRoomMenuItem = new javax.swing.JMenuItem();
+        jMenuItemDeleteRoom = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
-
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem10.setText("jMenuItem10");
-        jPopupMenu1.add(jMenuItem10);
-
-        jMenuItem11.setText("jMenuItem11");
-        jPopupMenu1.add(jMenuItem11);
-
-        jMenuItem5.setText("jMenuItem5");
-
-        jMenuItem6.setText("jMenuItem6");
-
-        jMenu2.setText("jMenu2");
-
-        jMenuItem7.setText("jMenuItem7");
-
-        jMenuItem8.setText("jMenuItem8");
-        jMenuItem8.setComponentPopupMenu(jPopupMenu1);
-
-        jMenuItem9.setText("jMenuItem9");
-        jMenuItem9.setComponentPopupMenu(jPopupMenu1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hotel Manager");
 
-        jTableGuests.setModel(new GuestTableModel());
-        jScrollPane1.setViewportView(jTableGuests);
+        jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPaneStateChanged(evt);
+            }
+        });
 
-        jTabbedPane1.addTab("Guests", jScrollPane1);
+        jTableGuests.setModel(new GuestTableModel());
+        jTableGuests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JPopupMenu(), org.jdesktop.beansbinding.ObjectProperty.create(), jTableGuests, org.jdesktop.beansbinding.BeanProperty.create("componentPopupMenu"));
+        bindingGroup.addBinding(binding);
+
+        jTableGuests.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTableGuestsFocusGained(evt);
+            }
+        });
+        jScrollPaneGuest.setViewportView(jTableGuests);
+
+        jTabbedPane.addTab("Guests", jScrollPaneGuest);
 
         jTableRooms.setModel(new RoomTableModel());
-        jScrollPane2.setViewportView(jTableRooms);
+        JComboBox roomTypeComboBox = new JComboBox(RoomType.values());
+        jTableRooms.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(roomTypeComboBox));
+        jTableRooms.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTableRoomsFocusGained(evt);
+            }
+        });
+        jScrollPaneRoom.setViewportView(jTableRooms);
         //JComboBox typeComboBox = new JComboBox();
         //for (RoomType type : RoomType.values()) {
             //    typeComboBox.addItem(type);
             //}
         //jTableRooms.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(typeComboBox));
 
-        jTabbedPane1.addTab("Rooms", jScrollPane2);
+        jTabbedPane.addTab("Rooms", jScrollPaneRoom);
 
         jToolBar1.setRollover(true);
 
@@ -109,44 +145,91 @@ public class HotelFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButtonAddGuest);
-        jToolBar1.add(jSeparator2);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
-        jButton2.setText("Add room");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDeleteGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_delete.png"))); // NOI18N
+        jButtonDeleteGuest.setText("Delete guest");
+        jButtonDeleteGuest.setEnabled(false);
+        jButtonDeleteGuest.setFocusable(false);
+        jButtonDeleteGuest.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonDeleteGuest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonDeleteGuest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonDeleteGuestActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton2);
+        jToolBar1.add(jButtonDeleteGuest);
+        jToolBar1.add(jSeparator4);
+
+        jButtonAddRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
+        jButtonAddRoom.setText("Add room");
+        jButtonAddRoom.setFocusable(false);
+        jButtonAddRoom.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonAddRoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonAddRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddRoomActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonAddRoom);
+
+        jButtonDeleteRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_delete.png"))); // NOI18N
+        jButtonDeleteRoom.setText("Delete room");
+        jButtonDeleteRoom.setEnabled(false);
+        jButtonDeleteRoom.setFocusable(false);
+        jButtonDeleteRoom.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonDeleteRoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonDeleteRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteRoomActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonDeleteRoom);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Hotel");
 
-        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        openMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_add.png"))); // NOI18N
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Add guest");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        addGuestMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        addGuestMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_add.png"))); // NOI18N
+        addGuestMenuItem.setMnemonic('o');
+        addGuestMenuItem.setText("Add guest");
+        addGuestMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                addGuestMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        fileMenu.add(addGuestMenuItem);
 
-        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Add room");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemDeleteGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_delete.png"))); // NOI18N
+        jMenuItemDeleteGuest.setText("Delete guest");
+        jMenuItemDeleteGuest.setEnabled(false);
+        jMenuItemDeleteGuest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                jMenuItemDeleteGuestActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        fileMenu.add(jMenuItemDeleteGuest);
+        fileMenu.add(jSeparator5);
+
+        addRoomMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        addRoomMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
+        addRoomMenuItem.setMnemonic('s');
+        addRoomMenuItem.setText("Add room");
+        addRoomMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addRoomMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(addRoomMenuItem);
+
+        jMenuItemDeleteRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_delete.png"))); // NOI18N
+        jMenuItemDeleteRoom.setText("Delete room");
+        jMenuItemDeleteRoom.setEnabled(false);
+        jMenuItemDeleteRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDeleteRoomActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItemDeleteRoom);
         fileMenu.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
@@ -168,7 +251,7 @@ public class HotelFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+            .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -176,8 +259,10 @@ public class HotelFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -186,24 +271,58 @@ public class HotelFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    private void addGuestMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGuestMenuItemActionPerformed
+        showGuestFrame();
+    }//GEN-LAST:event_addGuestMenuItemActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+    private void addRoomMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRoomMenuItemActionPerformed
+        showRoomFrame();
+    }//GEN-LAST:event_addRoomMenuItemActionPerformed
 
     private void jButtonAddGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddGuestActionPerformed
-        GuestFrame guestFrame = new GuestFrame();
-        guestFrame.setVisible(true);
+        showGuestFrame();
     }//GEN-LAST:event_jButtonAddGuestActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        RoomFrame roomFrame = new RoomFrame();
-        roomFrame.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButtonAddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddRoomActionPerformed
+        showRoomFrame();
+    }//GEN-LAST:event_jButtonAddRoomActionPerformed
 
+    private void jButtonDeleteGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteGuestActionPerformed
+        actionDeleteGuest();
+    }//GEN-LAST:event_jButtonDeleteGuestActionPerformed
+
+    private void jMenuItemDeleteGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeleteGuestActionPerformed
+        actionDeleteGuest();
+    }//GEN-LAST:event_jMenuItemDeleteGuestActionPerformed
+
+    private void jTableGuestsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableGuestsFocusGained
+        jButtonDeleteGuest.setEnabled(true);
+        jMenuItemDeleteGuest.setEnabled(true);
+    }//GEN-LAST:event_jTableGuestsFocusGained
+
+    private void jTableRoomsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableRoomsFocusGained
+        jButtonDeleteRoom.setEnabled(true);
+        jMenuItemDeleteRoom.setEnabled(true);
+    }//GEN-LAST:event_jTableRoomsFocusGained
+
+    private void jTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneStateChanged
+        if (jTabbedPane.getSelectedIndex() == 0) {
+            jButtonDeleteRoom.setEnabled(false);
+            jMenuItemDeleteRoom.setEnabled(false);
+        } else {
+            jButtonDeleteGuest.setEnabled(false);
+            jMenuItemDeleteGuest.setEnabled(false);
+        }
+    }//GEN-LAST:event_jTabbedPaneStateChanged
+
+    private void jButtonDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteRoomActionPerformed
+        actionDeleteRoom();
+    }//GEN-LAST:event_jButtonDeleteRoomActionPerformed
+
+    private void jMenuItemDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeleteRoomActionPerformed
+        actionDeleteRoom();
+    }//GEN-LAST:event_jMenuItemDeleteRoomActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -240,31 +359,26 @@ public class HotelFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addGuestMenuItem;
+    private javax.swing.JMenuItem addRoomMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAddGuest;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jButtonAddRoom;
+    private javax.swing.JButton jButtonDeleteGuest;
+    private javax.swing.JButton jButtonDeleteRoom;
+    private javax.swing.JMenuItem jMenuItemDeleteGuest;
+    private javax.swing.JMenuItem jMenuItemDeleteRoom;
+    private javax.swing.JScrollPane jScrollPaneGuest;
+    private javax.swing.JScrollPane jScrollPaneRoom;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableGuests;
     private javax.swing.JTable jTableRooms;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

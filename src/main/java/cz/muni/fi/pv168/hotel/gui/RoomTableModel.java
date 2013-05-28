@@ -8,6 +8,9 @@ import cz.muni.fi.pv168.hotel.App;
 import cz.muni.fi.pv168.hotel.Room;
 import cz.muni.fi.pv168.hotel.RoomManager;
 import cz.muni.fi.pv168.hotel.RoomType;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -19,15 +22,99 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class RoomTableModel extends AbstractTableModel {
  
     private RoomManager roomManager;
+    
+    private List<Room> rooms = new ArrayList<>();
 
     public RoomTableModel() {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class); 
         roomManager = ctx.getBean("roomManager", RoomManager.class);
-    }    
+        
+        RetrieveSwingWorker retrieveSwingWorker = new RetrieveSwingWorker();
+        retrieveSwingWorker.execute();
+    }
+    
+    private class CreateSwingWorker extends SwingWorker<Void,Void> {
+        private Room room;
+        
+        public CreateSwingWorker(Room room) {
+            this.room = room;
+        }
+        
+        @Override    
+        protected Void doInBackground() throws Exception {
+            roomManager.createRoom(room);
+            rooms.add(room);
+            return null;
+        }
+        
+        @Override    
+        protected void done() {
+            int lastRow = getRowCount() - 1;
+            fireTableRowsInserted(lastRow, lastRow);
+        }
+    }
+    
+    private class RetrieveSwingWorker extends SwingWorker<Void,Void> {        
+        @Override    
+        protected Void doInBackground() throws Exception {
+            rooms = roomManager.listAllRooms();
+            return null;
+        }
+        
+        @Override    
+        protected void done() {
+            fireTableRowsInserted(0, getRowCount() - 1);
+        }
+    }
+    
+    private class UpdateSwingWorker extends SwingWorker<Void,Void> {
+        private Room room;
+        private int rowIndex;
+        private int columnIndex;
+        
+        public UpdateSwingWorker(Room room, int rowIndex, int columnIndex) {
+            this.room = room;
+            this.rowIndex = rowIndex;
+            this.columnIndex = columnIndex;
+        }
+        
+        @Override    
+        protected Void doInBackground() throws Exception {
+            roomManager.updateRoom(room);
+            rooms.set(rowIndex, room);
+            return null;
+        }
+        
+        @Override    
+        protected void done() {
+            fireTableCellUpdated(rowIndex, columnIndex);
+        }
+    }
+    
+    private class DeleteSwingWorker extends SwingWorker<Void,Void> {        
+        private int row;
+        
+        public DeleteSwingWorker(int row) {
+            this.row = row;
+        }
+        
+        @Override    
+        protected Void doInBackground() throws Exception {
+            Integer id = rooms.get(row).getId();
+            rooms.remove(row);
+            roomManager.deleteRoom(id);
+            return null;
+        }
+        
+        @Override    
+        protected void done() {
+            fireTableRowsDeleted(row, row);
+        }
+    }
  
     @Override
     public int getRowCount() {
-        return roomManager.listAllRooms().size();
+        return rooms.size();
     }
  
     @Override
@@ -37,7 +124,7 @@ public class RoomTableModel extends AbstractTableModel {
  
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Room room = roomManager.listAllRooms().get(rowIndex);
+        Room room = rooms.get(rowIndex);
         switch (columnIndex) {
             case 0:
                 return room.getId();
@@ -92,7 +179,7 @@ public class RoomTableModel extends AbstractTableModel {
     
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Room room = roomManager.listAllRooms().get(rowIndex);
+        Room room = rooms.get(rowIndex);
         switch (columnIndex) {
             case 0:
                 room.setId((Integer) aValue);
@@ -112,8 +199,8 @@ public class RoomTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException("columnIndex");
         }
-        roomManager.updateRoom(room);
-        fireTableCellUpdated(rowIndex, columnIndex);
+        UpdateSwingWorker updateSwingWorker = new UpdateSwingWorker(room, rowIndex, columnIndex);
+        updateSwingWorker.execute();
     }
 
     @Override
@@ -129,6 +216,16 @@ public class RoomTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException("columnIndex");
         }
+    }
+    
+    public void addRow(Room room) {
+        CreateSwingWorker createSwingWorker = new CreateSwingWorker(room);
+        createSwingWorker.execute();
+    }
+    
+    public void removeRow(int row) {
+        DeleteSwingWorker deleteSwingWorker = new DeleteSwingWorker(row);
+        deleteSwingWorker.execute();
     }
     
 }

@@ -16,7 +16,7 @@ public interface RoomManager {
 	
 	void updateRoom(Room room);
 	
-	void deleteRoom(Room room);
+	void deleteRoom(Integer id);
 	
 	List<Room> listAllRooms();
 	

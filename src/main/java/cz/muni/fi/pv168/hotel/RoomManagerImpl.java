@@ -53,9 +53,9 @@ public class RoomManagerImpl implements RoomManager {
     }
 
     @Override
-    public void deleteRoom(Room room) {
+    public void deleteRoom(Integer id) {
         try {
-            jdbc.update("DELETE FROM room WHERE id=?", room.getId());
+            jdbc.update("DELETE FROM room WHERE id=?", id);
         } catch (DataAccessException ex) {
             String msg = "Error accessing the data.";
             logger.log(Level.SEVERE, msg, ex);
