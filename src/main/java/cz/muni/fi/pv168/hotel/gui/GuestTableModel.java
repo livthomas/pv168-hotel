@@ -7,13 +7,18 @@ package cz.muni.fi.pv168.hotel.gui;
 import cz.muni.fi.pv168.hotel.App;
 import cz.muni.fi.pv168.hotel.Guest;
 import cz.muni.fi.pv168.hotel.GuestManager;
+import cz.muni.fi.pv168.hotel.HotelManager;
+import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -24,12 +29,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class GuestTableModel extends AbstractTableModel {
  
     private GuestManager guestManager;
+    private HotelManager hotelManager;
     
     private List<Guest> guests = new ArrayList<>();
 
     public GuestTableModel() {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);        
-        guestManager = ctx.getBean("guestManager", GuestManager.class);
+        guestManager = ctx.getBean("guestManager", GuestManager.class);    
+        hotelManager = ctx.getBean("hotelManager", HotelManager.class);
         
         RetrieveSwingWorker retrieveSwingWorker = new RetrieveSwingWorker();
         retrieveSwingWorker.execute();
@@ -113,6 +120,17 @@ public class GuestTableModel extends AbstractTableModel {
             fireTableRowsDeleted(row, row);
         }
     }
+    
+//    public class ColorCellRenderer extends DefaultTableCellRenderer { 
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//            if (hotelManager.findRoomByGuest(guests.get(row)) != null) {
+//                setBackground(Color.CYAN);
+//            }
+//            return this;
+//        }
+//    }
  
     @Override
     public int getRowCount() {
@@ -217,6 +235,10 @@ public class GuestTableModel extends AbstractTableModel {
     public void removeRow(int row) {
         DeleteSwingWorker deleteSwingWorker = new DeleteSwingWorker(row);
         deleteSwingWorker.execute();
+    }
+    
+    public Guest getRow(int row) {
+        return guests.get(row);
     }
     
 }

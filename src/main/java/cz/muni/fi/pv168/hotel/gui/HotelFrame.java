@@ -38,6 +38,20 @@ public class HotelFrame extends javax.swing.JFrame {
         roomFrame.setVisible(true);
     }
     
+    private void showCheckFrame() {
+        int row = jTableGuests.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot check in", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        CheckFrame checkFrame = new CheckFrame(guestModel.getRow(row));
+        if (checkFrame.getModel().isChecked()) {
+            JOptionPane.showMessageDialog(this, "The guest has already been checked in.", "Cannot check in", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        checkFrame.setVisible(true);
+    }
+    
     private void actionDeleteGuest() {
         int row = jTableGuests.getSelectedRow();
         if (row < 0) {
@@ -58,6 +72,22 @@ public class HotelFrame extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(this, "Do you really want to delete the selected room?", "Delete room", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             roomModel.removeRow(row);
         }
+    }
+    
+    private void actionCheckOut() {
+        int row = jTableGuests.getSelectedRow();
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot check out", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        CheckTableModel checkModel = new CheckTableModel(guestModel.getRow(row));
+        if (!checkModel.isChecked()) {
+            JOptionPane.showMessageDialog(this, "The guest has not been checked in.", "Cannot check out", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(this, "Do you really want to check the selected guest out?", "Check out guest", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            checkModel.checkOut();
+        }        
     }
 
     /**
@@ -81,6 +111,9 @@ public class HotelFrame extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JToolBar.Separator();
         jButtonAddRoom = new javax.swing.JButton();
         jButtonDeleteRoom = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jButtonCheckIn = new javax.swing.JButton();
+        jButtonCheckOut = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         addGuestMenuItem = new javax.swing.JMenuItem();
@@ -88,6 +121,9 @@ public class HotelFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         addRoomMenuItem = new javax.swing.JMenuItem();
         jMenuItemDeleteRoom = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenuItemCheckIn = new javax.swing.JMenuItem();
+        jMenuItemCheckOut = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
 
@@ -184,6 +220,33 @@ public class HotelFrame extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButtonDeleteRoom);
+        jToolBar1.add(jSeparator2);
+
+        jButtonCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_add.png"))); // NOI18N
+        jButtonCheckIn.setText("Check in");
+        jButtonCheckIn.setEnabled(false);
+        jButtonCheckIn.setFocusable(false);
+        jButtonCheckIn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonCheckIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCheckInActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonCheckIn);
+
+        jButtonCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_delete.png"))); // NOI18N
+        jButtonCheckOut.setText("Check out");
+        jButtonCheckOut.setEnabled(false);
+        jButtonCheckOut.setFocusable(false);
+        jButtonCheckOut.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonCheckOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCheckOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCheckOutActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonCheckOut);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Hotel");
@@ -230,6 +293,27 @@ public class HotelFrame extends javax.swing.JFrame {
             }
         });
         fileMenu.add(jMenuItemDeleteRoom);
+        fileMenu.add(jSeparator3);
+
+        jMenuItemCheckIn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_add.png"))); // NOI18N
+        jMenuItemCheckIn.setText("Check in");
+        jMenuItemCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCheckInActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItemCheckIn);
+
+        jMenuItemCheckOut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_delete.png"))); // NOI18N
+        jMenuItemCheckOut.setText("Check out");
+        jMenuItemCheckOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCheckOutActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItemCheckOut);
         fileMenu.add(jSeparator1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
@@ -251,7 +335,7 @@ public class HotelFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+            .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -298,6 +382,10 @@ public class HotelFrame extends javax.swing.JFrame {
     private void jTableGuestsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableGuestsFocusGained
         jButtonDeleteGuest.setEnabled(true);
         jMenuItemDeleteGuest.setEnabled(true);
+        jButtonCheckIn.setEnabled(true);
+        jMenuItemCheckIn.setEnabled(true);
+        jButtonCheckOut.setEnabled(true);
+        jMenuItemCheckOut.setEnabled(true);
     }//GEN-LAST:event_jTableGuestsFocusGained
 
     private void jTableRoomsFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableRoomsFocusGained
@@ -312,6 +400,10 @@ public class HotelFrame extends javax.swing.JFrame {
         } else {
             jButtonDeleteGuest.setEnabled(false);
             jMenuItemDeleteGuest.setEnabled(false);
+            jButtonCheckIn.setEnabled(false);
+            jMenuItemCheckIn.setEnabled(false);
+            jButtonCheckOut.setEnabled(false);
+            jMenuItemCheckOut.setEnabled(false);
         }
     }//GEN-LAST:event_jTabbedPaneStateChanged
 
@@ -322,6 +414,22 @@ public class HotelFrame extends javax.swing.JFrame {
     private void jMenuItemDeleteRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeleteRoomActionPerformed
         actionDeleteRoom();
     }//GEN-LAST:event_jMenuItemDeleteRoomActionPerformed
+
+    private void jButtonCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckInActionPerformed
+        showCheckFrame();
+    }//GEN-LAST:event_jButtonCheckInActionPerformed
+
+    private void jMenuItemCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCheckInActionPerformed
+        showCheckFrame();
+    }//GEN-LAST:event_jMenuItemCheckInActionPerformed
+
+    private void jButtonCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCheckOutActionPerformed
+        actionCheckOut();
+    }//GEN-LAST:event_jButtonCheckOutActionPerformed
+
+    private void jMenuItemCheckOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCheckOutActionPerformed
+        actionCheckOut();
+    }//GEN-LAST:event_jMenuItemCheckOutActionPerformed
     
     /**
      * @param args the command line arguments
@@ -365,13 +473,19 @@ public class HotelFrame extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButtonAddGuest;
     private javax.swing.JButton jButtonAddRoom;
+    private javax.swing.JButton jButtonCheckIn;
+    private javax.swing.JButton jButtonCheckOut;
     private javax.swing.JButton jButtonDeleteGuest;
     private javax.swing.JButton jButtonDeleteRoom;
+    private javax.swing.JMenuItem jMenuItemCheckIn;
+    private javax.swing.JMenuItem jMenuItemCheckOut;
     private javax.swing.JMenuItem jMenuItemDeleteGuest;
     private javax.swing.JMenuItem jMenuItemDeleteRoom;
     private javax.swing.JScrollPane jScrollPaneGuest;
     private javax.swing.JScrollPane jScrollPaneRoom;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane;

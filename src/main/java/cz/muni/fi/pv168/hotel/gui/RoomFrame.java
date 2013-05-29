@@ -7,7 +7,6 @@ package cz.muni.fi.pv168.hotel.gui;
 import cz.muni.fi.pv168.hotel.Room;
 import cz.muni.fi.pv168.hotel.RoomType;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 
 /**
  *

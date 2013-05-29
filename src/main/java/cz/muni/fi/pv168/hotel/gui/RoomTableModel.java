@@ -20,13 +20,15 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author livthomas
  */
 public class RoomTableModel extends AbstractTableModel {
- 
-    private RoomManager roomManager;
     
-    private List<Room> rooms = new ArrayList<>();
+    protected ApplicationContext ctx;
+ 
+    protected RoomManager roomManager;
+    
+    protected List<Room> rooms = new ArrayList<>();
 
     public RoomTableModel() {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class); 
+        ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class); 
         roomManager = ctx.getBean("roomManager", RoomManager.class);
         
         RetrieveSwingWorker retrieveSwingWorker = new RetrieveSwingWorker();
