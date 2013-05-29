@@ -49,6 +49,8 @@ public class RoomFrame extends javax.swing.JFrame {
         jTextAreaNote = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("texts"); // NOI18N
+        setTitle(bundle.getString("ADD ROOM")); // NOI18N
         setResizable(false);
 
         jLabelType.setText(texts.getString("TYPE:")); // NOI18N

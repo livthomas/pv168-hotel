@@ -2,6 +2,7 @@ package cz.muni.fi.pv168.hotel;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,8 @@ import javax.sql.DataSource;
  */
 public class App {
     
+    private static ResourceBundle resource;
+    
     public static void main( String[] args ) {
         
     }
@@ -28,11 +31,12 @@ public class App {
         @Bean
         public DataSource dataSource() {
             //Apachce DBCP connection pooling DataSource
+            resource = ResourceBundle.getBundle("login");
             BasicDataSource bds = new BasicDataSource();
-            bds.setDriverClassName("com.mysql.jdbc.Driver");
-            bds.setUrl("jdbc:mysql://localhost:80/hotel");
-            bds.setUsername("hotel");
-            bds.setPassword("hotel");
+            bds.setDriverClassName(resource.getString("name"));
+            bds.setUrl(resource.getString("url"));
+            bds.setUsername(resource.getString("user"));
+            bds.setPassword(resource.getString("pass"));
             return bds;
         }
  
