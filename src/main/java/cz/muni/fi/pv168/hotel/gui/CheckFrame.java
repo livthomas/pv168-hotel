@@ -5,6 +5,7 @@
 package cz.muni.fi.pv168.hotel.gui;
 
 import cz.muni.fi.pv168.hotel.Guest;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
  * @author livthomas
  */
 public class CheckFrame extends javax.swing.JFrame {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     private Guest guest;
     
@@ -49,14 +51,14 @@ public class CheckFrame extends javax.swing.JFrame {
         jTable.setModel(new CheckTableModel(this.guest));
         jScrollPane1.setViewportView(jTable);
 
-        jButtonSave.setText("Save");
+        jButtonSave.setText(texts.getString("SAVE")); // NOI18N
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
             }
         });
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText(texts.getString("CANCEL")); // NOI18N
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);
@@ -92,7 +94,7 @@ public class CheckFrame extends javax.swing.JFrame {
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         int row = jTable.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "You have to select a room.", "Cannot check in the guest", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO SELECT A ROOM."), texts.getString("CANNOT CHECK IN THE GUEST"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         checkModel.checkIn(row);

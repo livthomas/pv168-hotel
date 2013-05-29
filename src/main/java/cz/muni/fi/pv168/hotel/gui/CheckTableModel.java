@@ -7,6 +7,7 @@ package cz.muni.fi.pv168.hotel.gui;
 import cz.muni.fi.pv168.hotel.Guest;
 import cz.muni.fi.pv168.hotel.HotelManager;
 import cz.muni.fi.pv168.hotel.Room;
+import java.util.ResourceBundle;
 import javax.swing.SwingWorker;
 
 /**
@@ -14,6 +15,7 @@ import javax.swing.SwingWorker;
  * @author livthomas
  */
 public class CheckTableModel extends RoomTableModel {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     private HotelManager hotelManager;
     
@@ -22,7 +24,7 @@ public class CheckTableModel extends RoomTableModel {
     public CheckTableModel(Guest guest) {
         super();
         this.guest = guest;
-        hotelManager = ctx.getBean("hotelManager", HotelManager.class);
+        hotelManager = ctx.getBean(texts.getString("HOTELMANAGER"), HotelManager.class);
     }
     
     @Override

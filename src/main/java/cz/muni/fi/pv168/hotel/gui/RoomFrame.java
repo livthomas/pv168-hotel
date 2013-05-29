@@ -6,6 +6,7 @@ package cz.muni.fi.pv168.hotel.gui;
 
 import cz.muni.fi.pv168.hotel.Room;
 import cz.muni.fi.pv168.hotel.RoomType;
+import java.util.ResourceBundle;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -13,6 +14,7 @@ import javax.swing.DefaultComboBoxModel;
  * @author livthomas
  */
 public class RoomFrame extends javax.swing.JFrame {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     private RoomTableModel roomModel;
 
@@ -49,17 +51,17 @@ public class RoomFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabelType.setText("Type:");
+        jLabelType.setText(texts.getString("TYPE:")); // NOI18N
 
-        jLabelBeds.setText("Number of beds:");
+        jLabelBeds.setText(texts.getString("NUMBER OF BEDS:")); // NOI18N
 
         jSpinnerBeds.setModel(new javax.swing.SpinnerNumberModel(Short.valueOf((short)2), Short.valueOf((short)1), null, Short.valueOf((short)1)));
 
-        jCheckBoxSeaView.setText("View of sea");
+        jCheckBoxSeaView.setText(texts.getString("VIEW OF SEA")); // NOI18N
 
-        jLabelNote.setText("Note:");
+        jLabelNote.setText(texts.getString("NOTE:")); // NOI18N
 
-        jButtonSave.setText("Save");
+        jButtonSave.setText(texts.getString("SAVE")); // NOI18N
         jButtonSave.setPreferredSize(new java.awt.Dimension(81, 25));
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,7 +69,7 @@ public class RoomFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText(texts.getString("CANCEL")); // NOI18N
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);

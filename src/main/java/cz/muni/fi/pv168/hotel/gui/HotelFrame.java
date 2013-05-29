@@ -5,6 +5,7 @@
 package cz.muni.fi.pv168.hotel.gui;
 
 import cz.muni.fi.pv168.hotel.RoomType;
+import java.util.ResourceBundle;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
  * @author livthomas
  */
 public class HotelFrame extends javax.swing.JFrame {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     private GuestTableModel guestModel;
     private RoomTableModel roomModel;
@@ -41,12 +43,12 @@ public class HotelFrame extends javax.swing.JFrame {
     private void showCheckFrame() {
         int row = jTableGuests.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot check in", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO SELECT A GUEST."), texts.getString("CANNOT CHECK IN"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         CheckFrame checkFrame = new CheckFrame(guestModel.getRow(row));
         if (checkFrame.getModel().isChecked()) {
-            JOptionPane.showMessageDialog(this, "The guest has already been checked in.", "Cannot check in", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("THE GUEST HAS ALREADY BEEN CHECKED IN."), texts.getString("CANNOT CHECK IN"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         checkFrame.setVisible(true);
@@ -55,10 +57,10 @@ public class HotelFrame extends javax.swing.JFrame {
     private void actionDeleteGuest() {
         int row = jTableGuests.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot delete guest", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO SELECT A GUEST."), texts.getString("CANNOT DELETE GUEST"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(this, "Do you really want to delete the selected guest?", "Delete guest", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, texts.getString("DO YOU REALLY WANT TO DELETE THE SELECTED GUEST?"), texts.getString("DELETE GUEST"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             guestModel.removeRow(row);
         }
     }
@@ -66,10 +68,10 @@ public class HotelFrame extends javax.swing.JFrame {
     private void actionDeleteRoom() {
         int row = jTableRooms.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "You have to select a room.", "Cannot delete room", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO SELECT A ROOM."), texts.getString("CANNOT DELETE ROOM"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(this, "Do you really want to delete the selected room?", "Delete room", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, texts.getString("DO YOU REALLY WANT TO DELETE THE SELECTED ROOM?"), texts.getString("DELETE ROOM"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             roomModel.removeRow(row);
         }
     }
@@ -77,15 +79,15 @@ public class HotelFrame extends javax.swing.JFrame {
     private void actionCheckOut() {
         int row = jTableGuests.getSelectedRow();
         if (row < 0) {
-            JOptionPane.showMessageDialog(this, "You have to select a guest.", "Cannot check out", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO SELECT A GUEST."), texts.getString("CANNOT CHECK OUT"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         CheckTableModel checkModel = new CheckTableModel(guestModel.getRow(row));
         if (!checkModel.isChecked()) {
-            JOptionPane.showMessageDialog(this, "The guest has not been checked in.", "Cannot check out", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("THE GUEST HAS NOT BEEN CHECKED IN."), texts.getString("CANNOT CHECK OUT"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(this, "Do you really want to check the selected guest out?", "Check out guest", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, texts.getString("DO YOU REALLY WANT TO CHECK THE SELECTED GUEST OUT?"), texts.getString("CHECK OUT GUEST"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             checkModel.checkOut();
         }        
     }
@@ -98,7 +100,6 @@ public class HotelFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jTabbedPane = new javax.swing.JTabbedPane();
         jScrollPaneGuest = new javax.swing.JScrollPane();
@@ -128,7 +129,7 @@ public class HotelFrame extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Hotel Manager");
+        setTitle(texts.getString("HOTEL MANAGER")); // NOI18N
 
         jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -138,10 +139,6 @@ public class HotelFrame extends javax.swing.JFrame {
 
         jTableGuests.setModel(new GuestTableModel());
         jTableGuests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, new javax.swing.JPopupMenu(), org.jdesktop.beansbinding.ObjectProperty.create(), jTableGuests, org.jdesktop.beansbinding.BeanProperty.create("componentPopupMenu"));
-        bindingGroup.addBinding(binding);
-
         jTableGuests.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTableGuestsFocusGained(evt);
@@ -149,7 +146,7 @@ public class HotelFrame extends javax.swing.JFrame {
         });
         jScrollPaneGuest.setViewportView(jTableGuests);
 
-        jTabbedPane.addTab("Guests", jScrollPaneGuest);
+        jTabbedPane.addTab(texts.getString("GUESTS"), jScrollPaneGuest); // NOI18N
 
         jTableRooms.setModel(new RoomTableModel());
         JComboBox roomTypeComboBox = new JComboBox(RoomType.values());
@@ -166,12 +163,12 @@ public class HotelFrame extends javax.swing.JFrame {
             //}
         //jTableRooms.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(typeComboBox));
 
-        jTabbedPane.addTab("Rooms", jScrollPaneRoom);
+        jTabbedPane.addTab(texts.getString("ROOMS"), jScrollPaneRoom); // NOI18N
 
         jToolBar1.setRollover(true);
 
         jButtonAddGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_add.png"))); // NOI18N
-        jButtonAddGuest.setText("Add guest");
+        jButtonAddGuest.setText(texts.getString("ADD GUEST")); // NOI18N
         jButtonAddGuest.setFocusable(false);
         jButtonAddGuest.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButtonAddGuest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -183,7 +180,7 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jButtonAddGuest);
 
         jButtonDeleteGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_delete.png"))); // NOI18N
-        jButtonDeleteGuest.setText("Delete guest");
+        jButtonDeleteGuest.setText(texts.getString("DELETE GUEST")); // NOI18N
         jButtonDeleteGuest.setEnabled(false);
         jButtonDeleteGuest.setFocusable(false);
         jButtonDeleteGuest.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -197,7 +194,7 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jSeparator4);
 
         jButtonAddRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
-        jButtonAddRoom.setText("Add room");
+        jButtonAddRoom.setText(texts.getString("ADD ROOM")); // NOI18N
         jButtonAddRoom.setFocusable(false);
         jButtonAddRoom.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButtonAddRoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -209,7 +206,7 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jButtonAddRoom);
 
         jButtonDeleteRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_delete.png"))); // NOI18N
-        jButtonDeleteRoom.setText("Delete room");
+        jButtonDeleteRoom.setText(texts.getString("DELETE ROOM")); // NOI18N
         jButtonDeleteRoom.setEnabled(false);
         jButtonDeleteRoom.setFocusable(false);
         jButtonDeleteRoom.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -223,7 +220,7 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jSeparator2);
 
         jButtonCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_add.png"))); // NOI18N
-        jButtonCheckIn.setText("Check in");
+        jButtonCheckIn.setText(texts.getString("CHECK IN")); // NOI18N
         jButtonCheckIn.setEnabled(false);
         jButtonCheckIn.setFocusable(false);
         jButtonCheckIn.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -236,7 +233,7 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jButtonCheckIn);
 
         jButtonCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_delete.png"))); // NOI18N
-        jButtonCheckOut.setText("Check out");
+        jButtonCheckOut.setText(texts.getString("CHECK OUT")); // NOI18N
         jButtonCheckOut.setEnabled(false);
         jButtonCheckOut.setFocusable(false);
         jButtonCheckOut.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -249,12 +246,12 @@ public class HotelFrame extends javax.swing.JFrame {
         jToolBar1.add(jButtonCheckOut);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("Hotel");
+        fileMenu.setText(texts.getString("HOTEL")); // NOI18N
 
         addGuestMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         addGuestMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_add.png"))); // NOI18N
         addGuestMenuItem.setMnemonic('o');
-        addGuestMenuItem.setText("Add guest");
+        addGuestMenuItem.setText(texts.getString("ADD GUEST")); // NOI18N
         addGuestMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addGuestMenuItemActionPerformed(evt);
@@ -263,7 +260,7 @@ public class HotelFrame extends javax.swing.JFrame {
         fileMenu.add(addGuestMenuItem);
 
         jMenuItemDeleteGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/user_delete.png"))); // NOI18N
-        jMenuItemDeleteGuest.setText("Delete guest");
+        jMenuItemDeleteGuest.setText(texts.getString("DELETE GUEST")); // NOI18N
         jMenuItemDeleteGuest.setEnabled(false);
         jMenuItemDeleteGuest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,7 +273,7 @@ public class HotelFrame extends javax.swing.JFrame {
         addRoomMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         addRoomMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_add.png"))); // NOI18N
         addRoomMenuItem.setMnemonic('s');
-        addRoomMenuItem.setText("Add room");
+        addRoomMenuItem.setText(texts.getString("ADD ROOM")); // NOI18N
         addRoomMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addRoomMenuItemActionPerformed(evt);
@@ -285,7 +282,7 @@ public class HotelFrame extends javax.swing.JFrame {
         fileMenu.add(addRoomMenuItem);
 
         jMenuItemDeleteRoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/key_delete.png"))); // NOI18N
-        jMenuItemDeleteRoom.setText("Delete room");
+        jMenuItemDeleteRoom.setText(texts.getString("DELETE ROOM")); // NOI18N
         jMenuItemDeleteRoom.setEnabled(false);
         jMenuItemDeleteRoom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -297,7 +294,7 @@ public class HotelFrame extends javax.swing.JFrame {
 
         jMenuItemCheckIn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_add.png"))); // NOI18N
-        jMenuItemCheckIn.setText("Check in");
+        jMenuItemCheckIn.setText(texts.getString("CHECK IN")); // NOI18N
         jMenuItemCheckIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCheckInActionPerformed(evt);
@@ -307,7 +304,7 @@ public class HotelFrame extends javax.swing.JFrame {
 
         jMenuItemCheckOut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemCheckOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/book_delete.png"))); // NOI18N
-        jMenuItemCheckOut.setText("Check out");
+        jMenuItemCheckOut.setText(texts.getString("CHECK OUT")); // NOI18N
         jMenuItemCheckOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemCheckOutActionPerformed(evt);
@@ -319,7 +316,7 @@ public class HotelFrame extends javax.swing.JFrame {
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/door_in.png"))); // NOI18N
         exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
+        exitMenuItem.setText(texts.getString("EXIT")); // NOI18N
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
@@ -345,8 +342,6 @@ public class HotelFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
         );
-
-        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -442,7 +437,7 @@ public class HotelFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if (texts.getString("NIMBUS").equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -493,6 +488,5 @@ public class HotelFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTableRooms;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

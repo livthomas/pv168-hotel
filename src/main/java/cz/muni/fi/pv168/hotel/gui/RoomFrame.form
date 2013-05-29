@@ -85,7 +85,9 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabelType">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Type:"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="TYPE:" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxType">
@@ -95,7 +97,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelBeds">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Number of beds:"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="NUMBER OF BEDS:" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JSpinner" name="jSpinnerBeds">
@@ -107,17 +111,23 @@
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBoxSeaView">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View of sea"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="VIEW OF SEA" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelNote">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Note:"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="NOTE:" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSave">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Save"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="SAVE" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[81, 25]"/>
         </Property>
@@ -128,7 +138,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonCancel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="texts.properties" key="CANCEL" replaceFormat="texts.getString(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelActionPerformed"/>

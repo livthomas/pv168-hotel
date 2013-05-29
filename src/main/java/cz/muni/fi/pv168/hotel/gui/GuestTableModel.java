@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author livthomas
  */
 public class GuestTableModel extends AbstractTableModel {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
  
     private GuestManager guestManager;
     private HotelManager hotelManager;
@@ -35,8 +37,8 @@ public class GuestTableModel extends AbstractTableModel {
 
     public GuestTableModel() {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class);        
-        guestManager = ctx.getBean("guestManager", GuestManager.class);    
-        hotelManager = ctx.getBean("hotelManager", HotelManager.class);
+        guestManager = ctx.getBean(texts.getString("GUESTMANAGER"), GuestManager.class);    
+        hotelManager = ctx.getBean(texts.getString("HOTELMANAGER"), HotelManager.class);
         
         RetrieveSwingWorker retrieveSwingWorker = new RetrieveSwingWorker();
         retrieveSwingWorker.execute();
@@ -155,7 +157,7 @@ public class GuestTableModel extends AbstractTableModel {
             case 3:
                 return guest.getVip();
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -163,15 +165,15 @@ public class GuestTableModel extends AbstractTableModel {
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Id";
+                return texts.getString("ID");
             case 1:
-                return "Name";
+                return texts.getString("NAME");
             case 2:
-                return "Credit card";
+                return texts.getString("CREDIT CARD");
             case 3:
-                return "VIP";
+                return texts.getString("VIP");
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -186,7 +188,7 @@ public class GuestTableModel extends AbstractTableModel {
             case 3:
                 return Boolean.class;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -207,7 +209,7 @@ public class GuestTableModel extends AbstractTableModel {
                 guest.setVip((Boolean) aValue);
                 break;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
         UpdateSwingWorker updateSwingWorker = new UpdateSwingWorker(guest, rowIndex, columnIndex);
         updateSwingWorker.execute();
@@ -223,7 +225,7 @@ public class GuestTableModel extends AbstractTableModel {
             case 3:
                 return true;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     

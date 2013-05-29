@@ -10,6 +10,7 @@ import cz.muni.fi.pv168.hotel.RoomManager;
 import cz.muni.fi.pv168.hotel.RoomType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.SwingWorker;
 import javax.swing.table.AbstractTableModel;
 import org.springframework.context.ApplicationContext;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author livthomas
  */
 public class RoomTableModel extends AbstractTableModel {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     protected ApplicationContext ctx;
  
@@ -29,7 +31,7 @@ public class RoomTableModel extends AbstractTableModel {
 
     public RoomTableModel() {
         ctx = new AnnotationConfigApplicationContext(App.SpringConfig.class); 
-        roomManager = ctx.getBean("roomManager", RoomManager.class);
+        roomManager = ctx.getBean(texts.getString("ROOMMANAGER"), RoomManager.class);
         
         RetrieveSwingWorker retrieveSwingWorker = new RetrieveSwingWorker();
         retrieveSwingWorker.execute();
@@ -139,7 +141,7 @@ public class RoomTableModel extends AbstractTableModel {
             case 4:
                 return room.getNote();
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -147,17 +149,17 @@ public class RoomTableModel extends AbstractTableModel {
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return "Id";
+                return texts.getString("ID");
             case 1:
-                return "Type";
+                return texts.getString("TYPE");
             case 2:
-                return "Number of beds";
+                return texts.getString("NUMBER OF BEDS");
             case 3:
-                return "View of sea";
+                return texts.getString("VIEW OF SEA");
             case 4:
-                return "Note";
+                return texts.getString("NOTE");
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -175,7 +177,7 @@ public class RoomTableModel extends AbstractTableModel {
             case 4:
                 return String.class;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     
@@ -199,7 +201,7 @@ public class RoomTableModel extends AbstractTableModel {
                 room.setNote((String) aValue);
                 break;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
         UpdateSwingWorker updateSwingWorker = new UpdateSwingWorker(room, rowIndex, columnIndex);
         updateSwingWorker.execute();
@@ -216,7 +218,7 @@ public class RoomTableModel extends AbstractTableModel {
             case 4:
                 return true;
             default:
-                throw new IllegalArgumentException("columnIndex");
+                throw new IllegalArgumentException(texts.getString("COLUMNINDEX"));
         }
     }
     

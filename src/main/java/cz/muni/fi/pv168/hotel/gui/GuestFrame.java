@@ -5,6 +5,7 @@
 package cz.muni.fi.pv168.hotel.gui;
 
 import cz.muni.fi.pv168.hotel.Guest;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
  * @author wintermute
  */
 public class GuestFrame extends javax.swing.JFrame {
+    private static final ResourceBundle texts = ResourceBundle.getBundle("texts");
     
     private GuestTableModel guestModel;
 
@@ -44,7 +46,7 @@ public class GuestFrame extends javax.swing.JFrame {
         jButtonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add new guest");
+        setTitle(texts.getString("ADD NEW GUEST")); // NOI18N
         setBackground(new java.awt.Color(238, 238, 138));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -53,18 +55,18 @@ public class GuestFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldName.setToolTipText("Name of guest");
+        jTextFieldName.setToolTipText(texts.getString("NAME OF GUEST")); // NOI18N
 
-        jLabelName.setText("Name :");
+        jLabelName.setText(texts.getString("NAME :")); // NOI18N
 
-        jLabelCreditCard.setText("Creditcard :");
+        jLabelCreditCard.setText(texts.getString("CREDITCARD :")); // NOI18N
 
-        jTextFieldCreditCard.setToolTipText("8 digits");
+        jTextFieldCreditCard.setToolTipText(texts.getString("8 DIGITS")); // NOI18N
 
-        jLabelVip.setText("VIP :");
+        jLabelVip.setText(texts.getString("VIP :")); // NOI18N
 
         buttonGroup1.add(jRadioButtonVipYes);
-        jRadioButtonVipYes.setText("Yes");
+        jRadioButtonVipYes.setText(texts.getString("YES")); // NOI18N
         jRadioButtonVipYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonVipYesActionPerformed(evt);
@@ -73,16 +75,16 @@ public class GuestFrame extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButtonVipNo);
         jRadioButtonVipNo.setSelected(true);
-        jRadioButtonVipNo.setText("No");
+        jRadioButtonVipNo.setText(texts.getString("NO")); // NOI18N
 
-        jButtonSave.setText("Save");
+        jButtonSave.setText(texts.getString("SAVE")); // NOI18N
         jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveActionPerformed(evt);
             }
         });
 
-        jButtonCancel.setText("Cancel");
+        jButtonCancel.setText(texts.getString("CANCEL")); // NOI18N
         jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelActionPerformed(evt);
@@ -154,11 +156,11 @@ public class GuestFrame extends javax.swing.JFrame {
         String creditCard = jTextFieldCreditCard.getText();
         
         if (name.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You have to enter the name.", "Name required", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO ENTER THE NAME."), texts.getString("NAME REQUIRED"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (creditCard.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "You have to enter the number of credit card.", "Credit card required", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, texts.getString("YOU HAVE TO ENTER THE NUMBER OF CREDIT CARD."), texts.getString("CREDIT CARD REQUIRED"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         
