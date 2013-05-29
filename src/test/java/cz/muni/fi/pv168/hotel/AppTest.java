@@ -1,5 +1,6 @@
 package cz.muni.fi.pv168.hotel;
 
+import java.util.ResourceBundle;
 import javax.sql.DataSource;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 public class AppTest extends TestCase {
 	
+    private static ResourceBundle resource;
+    
 	/**
 	 * Create the test case
 	 *
@@ -46,11 +49,12 @@ public class AppTest extends TestCase {
         @Bean
         public DataSource dataSource() {
             //Apachce DBCP connection pooling DataSource
+            resource = ResourceBundle.getBundle("login");
             BasicDataSource bds = new BasicDataSource();
-            bds.setDriverClassName("com.mysql.jdbc.Driver");
-            bds.setUrl("jdbc:mysql://localhost:80/hotel-test");
-            bds.setUsername("hotel");
-            bds.setPassword("hotel");
+            bds.setDriverClassName(resource.getString("name"));
+            bds.setUrl(resource.getString("testurl"));
+            bds.setUsername(resource.getString("user"));
+            bds.setPassword(resource.getString("pass"));
             return bds;
         }
  
